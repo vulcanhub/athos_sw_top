@@ -1,0 +1,5416 @@
+// Copyright lowRISC contributors.
+// Licensed under the Apache License, Version 2.0, see LICENSE for details.
+// SPDX-License-Identifier: Apache-2.0
+//
+// ------------------- W A R N I N G: A U T O - G E N E R A T E D   C O D E !! -------------------//
+// PLEASE DO NOT HAND-EDIT THIS FILE. IT HAS BEEN AUTO-GENERATED WITH THE FOLLOWING COMMAND:
+//
+// util/topgen.py -t hw/top_athos/data/top_athos.hjson \
+//                -o hw/top_athos/ \
+//                --hjson-only \
+//                --rnd_cnst_seed 4881560218908238235
+{
+  name: athos
+  type: top
+  rnd_cnst_seed: 4881560218908238235
+  datawidth: "32"
+  power:
+  {
+    domains:
+    [
+      Aon
+      "0"
+    ]
+    default: "0"
+  }
+  clocks:
+  {
+    hier_paths:
+    {
+      top: clkmgr_aon_clocks.
+      ext: ""
+    }
+    srcs:
+    [
+      {
+        name: main
+        aon: no
+        freq: "100000000"
+        derived: no
+        params: {}
+      }
+      {
+        name: io
+        aon: no
+        freq: "96000000"
+        derived: no
+        params: {}
+      }
+      {
+        name: usb
+        aon: no
+        freq: "48000000"
+        derived: no
+        params: {}
+      }
+      {
+        name: aon
+        aon: yes
+        freq: "200000"
+        derived: no
+        params: {}
+      }
+    ]
+    derived_srcs:
+    [
+      {
+        name: io_div2
+        aon: no
+        div: 2
+        src: io
+        freq: "48000000"
+      }
+      {
+        name: io_div4
+        aon: no
+        div: 4
+        src: io
+        freq: "24000000"
+      }
+    ]
+    groups:
+    [
+      {
+        name: powerup
+        src: top
+        sw_cg: no
+        unique: no
+        clocks:
+        {
+          clk_io_div4_powerup: io_div4
+          clk_aon_powerup: aon
+          clk_main_powerup: main
+          clk_io_powerup: io
+          clk_usb_powerup: usb
+          clk_io_div2_powerup: io_div2
+        }
+      }
+      {
+        name: trans
+        src: top
+        sw_cg: hint
+        unique: yes
+        clocks: {}
+      }
+      {
+        name: infra
+        src: top
+        sw_cg: no
+        unique: no
+        clocks:
+        {
+          clk_main_infra: main
+          clk_io_div4_infra: io_div4
+        }
+      }
+      {
+        name: secure
+        src: top
+        sw_cg: no
+        unique: no
+        clocks:
+        {
+          clk_io_div4_secure: io_div4
+          clk_aon_secure: aon
+          clk_main_secure: main
+        }
+      }
+      {
+        name: peri
+        src: top
+        sw_cg: yes
+        unique: no
+        clocks:
+        {
+          clk_io_div4_peri: io_div4
+        }
+      }
+      {
+        name: timers
+        src: top
+        sw_cg: no
+        unique: no
+        clocks:
+        {
+          clk_io_div4_timers: io_div4
+          clk_aon_timers: aon
+        }
+      }
+      {
+        name: proc
+        src: no
+        sw_cg: no
+        unique: no
+        clocks:
+        {
+          clk_proc_main: main
+        }
+      }
+    ]
+  }
+  resets:
+  {
+    hier_paths:
+    {
+      top: rstmgr_aon_resets.
+      ext: ""
+    }
+    nodes:
+    [
+      {
+        name: rst_ni
+        gen: false
+        type: ext
+      }
+      {
+        name: por_aon
+        gen: false
+        type: top
+        domains:
+        [
+          Aon
+        ]
+        clk: aon
+      }
+      {
+        name: lc_src
+        gen: false
+        type: int
+        domains:
+        [
+          Aon
+          "0"
+        ]
+        clk: io_div4
+      }
+      {
+        name: sys_src
+        gen: false
+        type: int
+        domains:
+        [
+          Aon
+          "0"
+        ]
+        clk: io_div4
+      }
+      {
+        name: por
+        gen: true
+        type: top
+        domains:
+        [
+          Aon
+        ]
+        parent: por_aon
+        clk: main
+      }
+      {
+        name: por_io
+        gen: true
+        type: top
+        domains:
+        [
+          Aon
+        ]
+        parent: por_aon
+        clk: io
+      }
+      {
+        name: por_io_div2
+        gen: true
+        type: top
+        domains:
+        [
+          Aon
+        ]
+        parent: por_aon
+        clk: io_div2
+      }
+      {
+        name: por_io_div4
+        gen: true
+        type: top
+        domains:
+        [
+          Aon
+        ]
+        parent: por_aon
+        clk: io_div4
+      }
+      {
+        name: por_usb
+        gen: true
+        type: top
+        domains:
+        [
+          Aon
+        ]
+        parent: por_aon
+        clk: usb
+      }
+      {
+        name: lc
+        gen: true
+        type: top
+        domains:
+        [
+          "0"
+        ]
+        parent: lc_src
+        clk: main
+      }
+      {
+        name: lc_io_div4
+        gen: true
+        type: top
+        domains:
+        [
+          "0"
+        ]
+        parent: lc_src
+        clk: io_div4
+      }
+      {
+        name: sys
+        gen: true
+        type: top
+        domains:
+        [
+          "0"
+        ]
+        parent: sys_src
+        clk: main
+      }
+      {
+        name: sys_io_div4
+        gen: true
+        type: top
+        domains:
+        [
+          Aon
+          "0"
+        ]
+        parent: sys_src
+        clk: io_div4
+      }
+      {
+        name: sys_aon
+        gen: true
+        type: top
+        domains:
+        [
+          Aon
+          "0"
+        ]
+        parent: sys_src
+        clk: aon
+      }
+      {
+        name: usb
+        gen: true
+        type: top
+        domains:
+        [
+          "0"
+        ]
+        parent: sys_src
+        clk: usb
+        sw: 1
+      }
+    ]
+  }
+  num_cores: "1"
+  host:
+  [
+    {
+      name: rv_core_ibex
+      type: rv_core_ibex
+      localparam:
+      {
+        xxxyyy: 32
+      }
+      inter_signal_list:
+      [
+        {
+          struct: esc_tx
+          type: uni
+          name: esc_nmi_tx
+          act: rcv
+          package: prim_esc_pkg
+          inst_name: rv_core_ibex
+          index: -1
+        }
+        {
+          struct: esc_rx
+          type: uni
+          name: esc_nmi_rx
+          act: req
+          package: prim_esc_pkg
+          inst_name: rv_core_ibex
+          index: -1
+        }
+        {
+          struct: crash_dump
+          type: uni
+          name: crash_dump
+          act: req
+          package: ibex_pkg
+          inst_name: rv_core_ibex
+          width: 1
+          default: ""
+          end_idx: -1
+          top_type: broadcast
+          top_signame: rv_core_ibex_crash_dump
+          index: -1
+        }
+        {
+          struct: ram_1p_cfg_t
+          type: uni
+          name: ram_cfg
+          act: rcv
+          package: prim_ram_1p_pkg
+          inst_name: rv_core_ibex
+          width: 1
+          default: ""
+          top_signame: ast_ram_1p_cfg
+          index: -1
+        }
+      ]
+    }
+    {
+      name: rv_dm
+      type: rv_dm
+      inter_signal_list:
+      [
+        {
+          struct: jtag
+          type: req_rsp
+          name: jtag
+          act: rsp
+          package: jtag_pkg
+          inst_name: rv_dm
+          index: -1
+        }
+      ]
+    }
+  ]
+  module:
+  [
+    {
+      name: uart0
+      type: uart
+      clock_srcs:
+      {
+        clk_i: io_div4
+      }
+      reset_connections:
+      {
+        rst_ni: rstmgr_aon_resets.rst_sys_io_div4_n[rstmgr_pkg::Domain0Sel]
+      }
+      clock_group: secure
+      clock_connections:
+      {
+        clk_i: clkmgr_aon_clocks.clk_io_div4_secure
+      }
+      domain: "0"
+      param_list: []
+      inter_signal_list:
+      [
+        {
+          name: tl
+          struct: tl
+          package: tlul_pkg
+          type: req_rsp
+          act: rsp
+          width: 1
+          inst_name: uart0
+          default: ""
+          end_idx: -1
+          top_signame: uart0_tl
+          index: -1
+        }
+      ]
+      base_addrs:
+      {
+        null: 0x40000000
+      }
+    }
+    {
+      name: gpio
+      type: gpio
+      clock_srcs:
+      {
+        clk_i: io_div4
+      }
+      clock_group: peri
+      reset_connections:
+      {
+        rst_ni: rstmgr_aon_resets.rst_sys_io_div4_n[rstmgr_pkg::Domain0Sel]
+      }
+      clock_connections:
+      {
+        clk_i: clkmgr_aon_clocks.clk_io_div4_peri
+      }
+      domain: "0"
+      param_list: []
+      inter_signal_list:
+      [
+        {
+          name: tl
+          struct: tl
+          package: tlul_pkg
+          type: req_rsp
+          act: rsp
+          width: 1
+          inst_name: gpio
+          default: ""
+          end_idx: -1
+          top_signame: gpio_tl
+          index: -1
+        }
+      ]
+      base_addrs:
+      {
+        null: 0x40040000
+      }
+    }
+    {
+      name: rv_timer
+      type: rv_timer
+      clock_srcs:
+      {
+        clk_i: io_div4
+      }
+      clock_group: timers
+      reset_connections:
+      {
+        rst_ni: rstmgr_aon_resets.rst_sys_io_div4_n[rstmgr_pkg::Domain0Sel]
+      }
+      clock_connections:
+      {
+        clk_i: clkmgr_aon_clocks.clk_io_div4_timers
+      }
+      domain: "0"
+      param_list: []
+      inter_signal_list:
+      [
+        {
+          name: tl
+          struct: tl
+          package: tlul_pkg
+          type: req_rsp
+          act: rsp
+          width: 1
+          inst_name: rv_timer
+          default: ""
+          end_idx: -1
+          top_signame: rv_timer_tl
+          index: -1
+        }
+      ]
+      base_addrs:
+      {
+        null: 0x40100000
+      }
+    }
+    {
+      name: pwrmgr_aon
+      type: pwrmgr
+      clock_srcs:
+      {
+        clk_i: io_div4
+        clk_slow_i: aon
+      }
+      clock_group: powerup
+      reset_connections:
+      {
+        rst_ni: rstmgr_aon_resets.rst_por_n[rstmgr_pkg::DomainAonSel]
+        rst_slow_ni: rstmgr_aon_resets.rst_por_aon_n[rstmgr_pkg::DomainAonSel]
+      }
+      domain: Aon
+      attr: templated
+      clock_connections:
+      {
+        clk_i: clkmgr_aon_clocks.clk_io_div4_powerup
+        clk_slow_i: clkmgr_aon_clocks.clk_aon_powerup
+      }
+      param_list: []
+      inter_signal_list:
+      [
+        {
+          name: pwr_ast
+          struct: pwr_ast
+          package: pwrmgr_pkg
+          type: req_rsp
+          act: req
+          width: 1
+          inst_name: pwrmgr_aon
+          default: ""
+          external: true
+          top_signame: pwrmgr_ast
+          index: -1
+        }
+        {
+          name: pwr_rst
+          struct: pwr_rst
+          package: pwrmgr_pkg
+          type: req_rsp
+          act: req
+          width: 1
+          inst_name: pwrmgr_aon
+          default: ""
+          end_idx: -1
+          top_signame: pwrmgr_aon_pwr_rst
+          index: -1
+        }
+        {
+          name: pwr_clk
+          struct: pwr_clk
+          package: pwrmgr_pkg
+          type: req_rsp
+          act: req
+          width: 1
+          inst_name: pwrmgr_aon
+          default: ""
+          end_idx: -1
+          top_signame: pwrmgr_aon_pwr_clk
+          index: -1
+        }
+        {
+          name: pwr_otp
+          struct: pwr_otp
+          package: pwrmgr_pkg
+          type: req_rsp
+          act: req
+          width: 1
+          inst_name: pwrmgr_aon
+          index: -1
+        }
+        {
+          name: pwr_lc
+          struct: pwr_lc
+          package: pwrmgr_pkg
+          type: req_rsp
+          act: req
+          width: 1
+          inst_name: pwrmgr_aon
+          index: -1
+        }
+        {
+          name: pwr_flash
+          struct: pwr_flash
+          package: pwrmgr_pkg
+          type: uni
+          act: rcv
+          width: 1
+          inst_name: pwrmgr_aon
+          default: ""
+          end_idx: -1
+          top_type: broadcast
+          top_signame: pwrmgr_aon_pwr_flash
+          index: -1
+        }
+        {
+          name: esc_rst_tx
+          struct: esc_tx
+          package: prim_esc_pkg
+          type: uni
+          act: rcv
+          width: 1
+          inst_name: pwrmgr_aon
+          index: -1
+        }
+        {
+          name: esc_rst_rx
+          struct: esc_rx
+          package: prim_esc_pkg
+          type: uni
+          act: req
+          width: 1
+          inst_name: pwrmgr_aon
+          index: -1
+        }
+        {
+          name: pwr_cpu
+          struct: pwr_cpu
+          package: pwrmgr_pkg
+          type: uni
+          act: rcv
+          width: 1
+          inst_name: pwrmgr_aon
+          default: ""
+          top_signame: pwrmgr_aon_pwr_cpu
+          index: -1
+        }
+        {
+          name: wakeups
+          struct: logic
+          type: uni
+          act: rcv
+          width: 2
+          inst_name: pwrmgr_aon
+          default: ""
+          package: ""
+          end_idx: -1
+          top_type: one-to-N
+          top_signame: pwrmgr_aon_wakeups
+          index: -1
+        }
+        {
+          name: rstreqs
+          struct: logic
+          type: uni
+          act: rcv
+          width: 2
+          inst_name: pwrmgr_aon
+          default: ""
+          package: ""
+          end_idx: -1
+          top_type: one-to-N
+          top_signame: pwrmgr_aon_rstreqs
+          index: -1
+        }
+        {
+          name: strap
+          struct: logic
+          type: uni
+          act: req
+          width: 1
+          inst_name: pwrmgr_aon
+          index: -1
+        }
+        {
+          name: low_power
+          struct: logic
+          type: uni
+          act: req
+          width: 1
+          inst_name: pwrmgr_aon
+          index: -1
+        }
+        {
+          name: rom_ctrl
+          struct: pwrmgr_data
+          package: rom_ctrl_pkg
+          type: uni
+          act: rcv
+          width: 1
+          inst_name: pwrmgr_aon
+          default: ""
+          top_signame: rom_ctrl_pwrmgr_data
+          index: -1
+        }
+        {
+          name: fetch_en
+          struct: lc_tx
+          package: vk_athos_pkg
+          type: uni
+          act: req
+          width: 1
+          inst_name: pwrmgr_aon
+          default: ""
+          top_signame: pwrmgr_aon_fetch_en
+          index: -1
+        }
+        {
+          name: tl
+          struct: tl
+          package: tlul_pkg
+          type: req_rsp
+          act: rsp
+          width: 1
+          inst_name: pwrmgr_aon
+          default: ""
+          end_idx: -1
+          top_signame: pwrmgr_aon_tl
+          index: -1
+        }
+      ]
+      base_addrs:
+      {
+        null: 0x40400000
+      }
+    }
+    {
+      name: rstmgr_aon
+      type: rstmgr
+      clock_srcs:
+      {
+        clk_i: io_div4
+        clk_aon_i: aon
+        clk_main_i: main
+        clk_io_i: io
+        clk_usb_i: usb
+        clk_io_div2_i: io_div2
+        clk_io_div4_i: io_div4
+      }
+      clock_group: powerup
+      reset_connections:
+      {
+        rst_ni: rst_ni
+      }
+      domain: Aon
+      attr: templated
+      clock_connections:
+      {
+        clk_i: clkmgr_aon_clocks.clk_io_div4_powerup
+        clk_aon_i: clkmgr_aon_clocks.clk_aon_powerup
+        clk_main_i: clkmgr_aon_clocks.clk_main_powerup
+        clk_io_i: clkmgr_aon_clocks.clk_io_powerup
+        clk_usb_i: clkmgr_aon_clocks.clk_usb_powerup
+        clk_io_div2_i: clkmgr_aon_clocks.clk_io_div2_powerup
+        clk_io_div4_i: clkmgr_aon_clocks.clk_io_div4_powerup
+      }
+      param_list: []
+      inter_signal_list:
+      [
+        {
+          name: pwr
+          struct: pwr_rst
+          type: req_rsp
+          act: rsp
+          width: 1
+          inst_name: rstmgr_aon
+          default: ""
+          package: pwrmgr_pkg
+          top_signame: pwrmgr_aon_pwr_rst
+          index: -1
+        }
+        {
+          name: resets
+          struct: rstmgr_out
+          package: rstmgr_pkg
+          type: uni
+          act: req
+          width: 1
+          inst_name: rstmgr_aon
+          default: ""
+          top_signame: rstmgr_aon_resets
+          index: -1
+        }
+        {
+          name: cpu
+          struct: rstmgr_cpu
+          package: rstmgr_pkg
+          type: uni
+          act: rcv
+          width: 1
+          inst_name: rstmgr_aon
+          default: ""
+          top_signame: rstmgr_aon_cpu
+          index: -1
+        }
+        {
+          name: alert_dump
+          struct: alert_crashdump
+          package: vk_athos_pkg
+          type: uni
+          act: rcv
+          width: 1
+          default: 1'b0
+          inst_name: rstmgr_aon
+          index: -1
+        }
+        {
+          name: cpu_dump
+          struct: crash_dump
+          package: ibex_pkg
+          type: uni
+          act: rcv
+          width: 1
+          inst_name: rstmgr_aon
+          default: ""
+          top_signame: rv_core_ibex_crash_dump
+          index: -1
+        }
+        {
+          name: resets_ast
+          struct: rstmgr_ast_out
+          package: rstmgr_pkg
+          type: uni
+          act: req
+          width: 1
+          inst_name: rstmgr_aon
+          default: ""
+          external: true
+          top_signame: rsts_ast
+          index: -1
+        }
+        {
+          name: tl
+          struct: tl
+          package: tlul_pkg
+          type: req_rsp
+          act: rsp
+          width: 1
+          inst_name: rstmgr_aon
+          default: ""
+          end_idx: -1
+          top_signame: rstmgr_aon_tl
+          index: -1
+        }
+      ]
+      base_addrs:
+      {
+        null: 0x40410000
+      }
+    }
+    {
+      name: clkmgr_aon
+      type: clkmgr
+      clock_srcs:
+      {
+        clk_i: io_div4
+      }
+      clock_group: powerup
+      reset_connections:
+      {
+        rst_ni: rstmgr_aon_resets.rst_por_io_div4_n[rstmgr_pkg::DomainAonSel]
+        rst_main_ni: rstmgr_aon_resets.rst_por_n[rstmgr_pkg::DomainAonSel]
+        rst_io_ni: rstmgr_aon_resets.rst_por_io_n[rstmgr_pkg::DomainAonSel]
+        rst_usb_ni: rstmgr_aon_resets.rst_por_usb_n[rstmgr_pkg::DomainAonSel]
+        rst_io_div2_ni: rstmgr_aon_resets.rst_por_io_div2_n[rstmgr_pkg::DomainAonSel]
+        rst_io_div4_ni: rstmgr_aon_resets.rst_por_io_div4_n[rstmgr_pkg::DomainAonSel]
+      }
+      domain: Aon
+      attr: templated
+      clock_connections:
+      {
+        clk_i: clkmgr_aon_clocks.clk_io_div4_powerup
+      }
+      param_list: []
+      inter_signal_list:
+      [
+        {
+          name: clocks
+          struct: clkmgr_out
+          package: clkmgr_pkg
+          type: uni
+          act: req
+          width: 1
+          inst_name: clkmgr_aon
+          default: ""
+          top_signame: clkmgr_aon_clocks
+          index: -1
+        }
+        {
+          name: lc_dft_en
+          struct: lc_tx
+          package: vk_athos_pkg
+          type: uni
+          act: rcv
+          width: 1
+          inst_name: clkmgr_aon
+          index: -1
+        }
+        {
+          name: ast_clk_byp_req
+          struct: lc_tx
+          package: vk_athos_pkg
+          type: uni
+          act: req
+          width: 1
+          inst_name: clkmgr_aon
+          default: ""
+          external: true
+          top_signame: ast_clk_byp_req
+          index: -1
+        }
+        {
+          name: ast_clk_byp_ack
+          struct: lc_tx
+          package: vk_athos_pkg
+          type: uni
+          act: rcv
+          width: 1
+          inst_name: clkmgr_aon
+          default: ""
+          external: true
+          top_signame: ast_clk_byp_ack
+          index: -1
+        }
+        {
+          name: lc_clk_byp_req
+          struct: lc_tx
+          package: vk_athos_pkg
+          type: uni
+          act: rcv
+          width: 1
+          inst_name: clkmgr_aon
+          index: -1
+        }
+        {
+          name: lc_clk_byp_ack
+          struct: lc_tx
+          package: vk_athos_pkg
+          type: uni
+          act: req
+          width: 1
+          inst_name: clkmgr_aon
+          index: -1
+        }
+        {
+          name: jitter_en
+          struct: logic
+          type: uni
+          act: req
+          width: 1
+          inst_name: clkmgr_aon
+          default: ""
+          package: ""
+          external: true
+          top_signame: clk_main_jitter_en
+          index: -1
+        }
+        {
+          name: clk_main
+          struct: logic
+          type: uni
+          act: rcv
+          width: 1
+          inst_name: clkmgr_aon
+          default: ""
+          package: ""
+          external: true
+          top_signame: clk_main
+          index: -1
+        }
+        {
+          name: clk_io
+          struct: logic
+          type: uni
+          act: rcv
+          width: 1
+          inst_name: clkmgr_aon
+          default: ""
+          package: ""
+          external: true
+          top_signame: clk_io
+          index: -1
+        }
+        {
+          name: clk_usb
+          struct: logic
+          type: uni
+          act: rcv
+          width: 1
+          inst_name: clkmgr_aon
+          default: ""
+          package: ""
+          external: true
+          top_signame: clk_usb
+          index: -1
+        }
+        {
+          name: clk_aon
+          struct: logic
+          type: uni
+          act: rcv
+          width: 1
+          inst_name: clkmgr_aon
+          default: ""
+          package: ""
+          external: true
+          top_signame: clk_aon
+          index: -1
+        }
+        {
+          name: clocks_ast
+          struct: clkmgr_ast_out
+          package: clkmgr_pkg
+          type: uni
+          act: req
+          width: 1
+          inst_name: clkmgr_aon
+          default: ""
+          external: true
+          top_signame: clks_ast
+          index: -1
+        }
+        {
+          name: pwr
+          struct: pwr_clk
+          type: req_rsp
+          act: rsp
+          width: 1
+          inst_name: clkmgr_aon
+          default: ""
+          package: pwrmgr_pkg
+          top_signame: pwrmgr_aon_pwr_clk
+          index: -1
+        }
+        {
+          name: tl
+          struct: tl
+          package: tlul_pkg
+          type: req_rsp
+          act: rsp
+          width: 1
+          inst_name: clkmgr_aon
+          default: ""
+          end_idx: -1
+          top_signame: clkmgr_aon_tl
+          index: -1
+        }
+      ]
+      base_addrs:
+      {
+        null: 0x40420000
+      }
+    }
+    {
+      name: sysrst_ctrl_aon
+      type: sysrst_ctrl
+      clock_srcs:
+      {
+        clk_i: io_div4
+        clk_aon_i: aon
+      }
+      clock_group: secure
+      reset_connections:
+      {
+        rst_ni: rstmgr_aon_resets.rst_sys_io_div4_n[rstmgr_pkg::DomainAonSel]
+        rst_aon_ni: rstmgr_aon_resets.rst_sys_aon_n[rstmgr_pkg::DomainAonSel]
+      }
+      domain: Aon
+      clock_connections:
+      {
+        clk_i: clkmgr_aon_clocks.clk_io_div4_secure
+        clk_aon_i: clkmgr_aon_clocks.clk_aon_secure
+      }
+      param_list: []
+      inter_signal_list:
+      [
+        {
+          name: gsc_wk
+          struct: logic
+          type: uni
+          act: req
+          width: 1
+          inst_name: sysrst_ctrl_aon
+          default: ""
+          package: ""
+          top_signame: pwrmgr_aon_wakeups
+          index: 0
+        }
+        {
+          name: gsc_rst
+          struct: logic
+          type: uni
+          act: req
+          width: 1
+          inst_name: sysrst_ctrl_aon
+          default: ""
+          package: ""
+          top_signame: pwrmgr_aon_rstreqs
+          index: 0
+        }
+        {
+          name: tl
+          struct: tl
+          package: tlul_pkg
+          type: req_rsp
+          act: rsp
+          width: 1
+          inst_name: sysrst_ctrl_aon
+          default: ""
+          end_idx: -1
+          top_signame: sysrst_ctrl_aon_tl
+          index: -1
+        }
+      ]
+      base_addrs:
+      {
+        null: 0x40430000
+      }
+    }
+    {
+      name: aon_timer_aon
+      type: aon_timer
+      clock_srcs:
+      {
+        clk_i: io_div4
+        clk_aon_i: aon
+      }
+      clock_group: timers
+      reset_connections:
+      {
+        rst_ni: rstmgr_aon_resets.rst_sys_io_div4_n[rstmgr_pkg::DomainAonSel]
+        rst_aon_ni: rstmgr_aon_resets.rst_sys_aon_n[rstmgr_pkg::DomainAonSel]
+      }
+      domain: Aon
+      attr: templated
+      clock_connections:
+      {
+        clk_i: clkmgr_aon_clocks.clk_io_div4_timers
+        clk_aon_i: clkmgr_aon_clocks.clk_aon_timers
+      }
+      param_list: []
+      inter_signal_list:
+      [
+        {
+          name: aon_timer_wkup_req
+          struct: logic
+          type: uni
+          act: req
+          width: 1
+          default: 1'b0
+          inst_name: aon_timer_aon
+          package: ""
+          top_signame: pwrmgr_aon_wakeups
+          index: 1
+        }
+        {
+          name: aon_timer_rst_req
+          struct: logic
+          type: uni
+          act: req
+          width: 1
+          default: 1'b0
+          inst_name: aon_timer_aon
+          package: ""
+          top_signame: pwrmgr_aon_rstreqs
+          index: 1
+        }
+        {
+          name: lc_escalate_en
+          struct: lc_tx
+          package: vk_athos_pkg
+          type: uni
+          act: rcv
+          width: 1
+          default: vk_athos_pkg::Off
+          inst_name: aon_timer_aon
+          index: -1
+        }
+        {
+          name: sleep_mode
+          struct: logic
+          type: uni
+          act: rcv
+          width: 1
+          inst_name: aon_timer_aon
+          index: -1
+        }
+        {
+          name: tl
+          struct: tl
+          package: tlul_pkg
+          type: req_rsp
+          act: rsp
+          width: 1
+          inst_name: aon_timer_aon
+          default: ""
+          end_idx: -1
+          top_signame: aon_timer_aon_tl
+          index: -1
+        }
+      ]
+      base_addrs:
+      {
+        null: 0x40470000
+      }
+    }
+    {
+      name: ast
+      type: ast
+      clock_srcs:
+      {
+        clk_i: io_div4
+      }
+      clock_group: secure
+      clock_reset_export:
+      [
+        ast
+      ]
+      reset_connections:
+      {
+        rst_ni: rstmgr_aon_resets.rst_sys_io_div4_n[rstmgr_pkg::Domain0Sel]
+      }
+      attr: reggen_only
+      clock_connections:
+      {
+        clk_i: clkmgr_aon_clocks.clk_io_div4_secure
+      }
+      domain: "0"
+      param_list: []
+      inter_signal_list:
+      [
+        {
+          name: tl
+          struct: tl
+          package: tlul_pkg
+          type: req_rsp
+          act: rsp
+          width: 1
+          inst_name: ast
+          index: -1
+        }
+      ]
+      base_addrs:
+      {
+        null: 0x40480000
+      }
+    }
+    {
+      name: flash_ctrl
+      type: flash_ctrl
+      clock_srcs:
+      {
+        clk_i: main
+        clk_otp_i: io_div4
+      }
+      clock_group: infra
+      reset_connections:
+      {
+        rst_ni: rstmgr_aon_resets.rst_lc_n[rstmgr_pkg::Domain0Sel]
+        rst_otp_ni: rstmgr_aon_resets.rst_lc_io_div4_n[rstmgr_pkg::Domain0Sel]
+      }
+      base_addrs:
+      {
+        core: 0x41000000
+        prim: 0x41008000
+      }
+      attr: templated
+      clock_connections:
+      {
+        clk_i: clkmgr_aon_clocks.clk_main_infra
+        clk_otp_i: clkmgr_aon_clocks.clk_io_div4_infra
+      }
+      domain: "0"
+      param_list:
+      [
+        {
+          name: RndCnstAddrKey
+          desc: Compile-time random bits for default address key
+          type: flash_ctrl_pkg::flash_key_t
+          randcount: 128
+          randtype: data
+          name_top: RndCnstFlashCtrlAddrKey
+          default: 0x83d0550b80e84eb1f4c3471c5def7861
+          randwidth: 128
+        }
+        {
+          name: RndCnstDataKey
+          desc: Compile-time random bits for default data key
+          type: flash_ctrl_pkg::flash_key_t
+          randcount: 128
+          randtype: data
+          name_top: RndCnstFlashCtrlDataKey
+          default: 0xfabd19450b238d4c2d73930d4cac3785
+          randwidth: 128
+        }
+        {
+          name: RndCnstLfsrSeed
+          desc: Compile-time random bits for initial LFSR seed
+          type: flash_ctrl_pkg::lfsr_seed_t
+          randcount: 32
+          randtype: data
+          name_top: RndCnstFlashCtrlLfsrSeed
+          default: 0xd89f9dfc
+          randwidth: 32
+        }
+        {
+          name: RndCnstLfsrPerm
+          desc: Compile-time random permutation for LFSR output
+          type: flash_ctrl_pkg::lfsr_perm_t
+          randcount: 32
+          randtype: perm
+          name_top: RndCnstFlashCtrlLfsrPerm
+          default: 0x26ff203d990d87c5e8a98bafec7506855aa99c54
+          randwidth: 160
+        }
+      ]
+      inter_signal_list:
+      [
+        {
+          name: flash
+          struct: flash
+          package: flash_ctrl_pkg
+          type: req_rsp
+          act: req
+          width: 1
+          inst_name: flash_ctrl
+          default: ""
+          end_idx: -1
+          top_signame: flash_ctrl_flash
+          index: -1
+        }
+        {
+          name: otp
+          struct: flash_otp_key
+          package: vk_athos_pkg
+          type: req_rsp
+          act: req
+          width: 1
+          inst_name: flash_ctrl
+          index: -1
+        }
+        {
+          name: lc_creator_seed_sw_rw_en
+          struct: lc_tx
+          package: vk_athos_pkg
+          type: uni
+          act: rcv
+          width: 1
+          inst_name: flash_ctrl
+          index: -1
+        }
+        {
+          name: lc_owner_seed_sw_rw_en
+          struct: lc_tx
+          package: vk_athos_pkg
+          type: uni
+          act: rcv
+          width: 1
+          inst_name: flash_ctrl
+          index: -1
+        }
+        {
+          name: lc_iso_part_sw_rd_en
+          struct: lc_tx
+          package: vk_athos_pkg
+          type: uni
+          act: rcv
+          width: 1
+          inst_name: flash_ctrl
+          index: -1
+        }
+        {
+          name: lc_iso_part_sw_wr_en
+          struct: lc_tx
+          package: vk_athos_pkg
+          type: uni
+          act: rcv
+          width: 1
+          inst_name: flash_ctrl
+          index: -1
+        }
+        {
+          name: lc_seed_hw_rd_en
+          struct: lc_tx
+          package: vk_athos_pkg
+          type: uni
+          act: rcv
+          width: 1
+          inst_name: flash_ctrl
+          index: -1
+        }
+        {
+          name: rma_req
+          struct: lc_tx
+          package: vk_athos_pkg
+          type: uni
+          act: rcv
+          width: 1
+          inst_name: flash_ctrl
+          index: -1
+        }
+        {
+          name: rma_ack
+          struct: lc_tx
+          package: vk_athos_pkg
+          type: uni
+          act: req
+          width: 1
+          inst_name: flash_ctrl
+          index: -1
+        }
+        {
+          name: rma_seed
+          struct: lc_flash_rma_seed
+          package: vk_athos_pkg
+          type: uni
+          act: rcv
+          width: 1
+          default: "'b0"
+          inst_name: flash_ctrl
+          index: -1
+        }
+        {
+          name: pwrmgr
+          struct: pwr_flash
+          package: pwrmgr_pkg
+          type: uni
+          act: req
+          width: 1
+          inst_name: flash_ctrl
+          default: ""
+          top_signame: pwrmgr_aon_pwr_flash
+          index: -1
+        }
+        {
+          name: keymgr
+          struct: keymgr_flash
+          package: flash_ctrl_pkg
+          type: uni
+          act: req
+          width: 1
+          inst_name: flash_ctrl
+          index: -1
+        }
+        {
+          name: core_tl
+          struct: tl
+          package: tlul_pkg
+          type: req_rsp
+          act: rsp
+          width: 1
+          inst_name: flash_ctrl
+          default: ""
+          end_idx: -1
+          top_signame: flash_ctrl_core_tl
+          index: -1
+        }
+        {
+          name: prim_tl
+          struct: tl
+          package: tlul_pkg
+          type: req_rsp
+          act: rsp
+          width: 1
+          inst_name: flash_ctrl
+          default: ""
+          end_idx: -1
+          top_signame: flash_ctrl_prim_tl
+          index: -1
+        }
+      ]
+    }
+    {
+      name: rv_plic
+      type: rv_plic
+      clock_srcs:
+      {
+        clk_i: main
+      }
+      clock_group: secure
+      reset_connections:
+      {
+        rst_ni: rstmgr_aon_resets.rst_sys_n[rstmgr_pkg::Domain0Sel]
+      }
+      attr: templated
+      clock_connections:
+      {
+        clk_i: clkmgr_aon_clocks.clk_main_secure
+      }
+      domain: "0"
+      param_list: []
+      inter_signal_list:
+      [
+        {
+          name: tl
+          struct: tl
+          package: tlul_pkg
+          type: req_rsp
+          act: rsp
+          width: 1
+          inst_name: rv_plic
+          default: ""
+          end_idx: -1
+          top_signame: rv_plic_tl
+          index: -1
+        }
+      ]
+      base_addrs:
+      {
+        null: 0x41010000
+      }
+    }
+    {
+      name: rom_ctrl
+      type: rom_ctrl
+      clock_srcs:
+      {
+        clk_i: main
+      }
+      clock_group: infra
+      reset_connections:
+      {
+        rst_ni: rstmgr_aon_resets.rst_sys_n[rstmgr_pkg::Domain0Sel]
+      }
+      base_addrs:
+      {
+        rom: 0x00008000
+        regs: 0x411e0000
+      }
+      clock_connections:
+      {
+        clk_i: clkmgr_aon_clocks.clk_main_infra
+      }
+      domain: "0"
+      param_list:
+      [
+        {
+          name: BootRomInitFile
+          desc: Contents of mask ROM
+          type: ""
+          default: '''""'''
+          expose: "true"
+          name_top: RomCtrlBootRomInitFile
+        }
+        {
+          name: RndCnstScrNonce
+          desc: Fixed nonce used for address / data scrambling
+          type: bit [63:0]
+          randcount: 64
+          randtype: data
+          name_top: RndCnstRomCtrlScrNonce
+          default: 0xda97661e3425b168
+          randwidth: 64
+        }
+        {
+          name: RndCnstScrKey
+          desc: Randomised constant used as a scrambling key for ROM data
+          type: bit [127:0]
+          randcount: 128
+          randtype: data
+          name_top: RndCnstRomCtrlScrKey
+          default: 0x1fe1715a278f7c73a7aeaf50a9054a7f
+          randwidth: 128
+        }
+        {
+          name: SkipCheck
+          desc: Skip rom power up check
+          type: bit
+          default: "1"
+          expose: "true"
+          name_top: RomCtrlSkipCheck
+        }
+      ]
+      inter_signal_list:
+      [
+        {
+          name: rom_cfg
+          struct: rom_cfg
+          package: prim_rom_pkg
+          type: uni
+          act: rcv
+          width: 1
+          inst_name: rom_ctrl
+          default: ""
+          top_signame: ast_rom_cfg
+          index: -1
+        }
+        {
+          name: pwrmgr_data
+          struct: pwrmgr_data
+          package: rom_ctrl_pkg
+          type: uni
+          act: req
+          width: 1
+          inst_name: rom_ctrl
+          default: ""
+          end_idx: -1
+          top_type: broadcast
+          top_signame: rom_ctrl_pwrmgr_data
+          index: -1
+        }
+        {
+          name: keymgr_data
+          struct: keymgr_data
+          package: rom_ctrl_pkg
+          type: uni
+          act: req
+          width: 1
+          inst_name: rom_ctrl
+          index: -1
+        }
+        {
+          name: kmac_data
+          struct: app
+          package: vk_athos_pkg
+          type: req_rsp
+          act: req
+          width: 1
+          inst_name: rom_ctrl
+          index: -1
+        }
+        {
+          name: regs_tl
+          struct: tl
+          package: tlul_pkg
+          type: req_rsp
+          act: rsp
+          width: 1
+          inst_name: rom_ctrl
+          default: ""
+          end_idx: -1
+          top_signame: rom_ctrl_regs_tl
+          index: -1
+        }
+        {
+          name: rom_tl
+          struct: tl
+          package: tlul_pkg
+          type: req_rsp
+          act: rsp
+          width: 1
+          inst_name: rom_ctrl
+          default: ""
+          end_idx: -1
+          top_signame: rom_ctrl_rom_tl
+          index: -1
+        }
+      ]
+    }
+  ]
+  memory:
+  [
+    {
+      name: ram_main
+      clock_srcs:
+      {
+        clk_i: main
+      }
+      clock_group: infra
+      reset_connections:
+      {
+        rst_ni: rstmgr_aon_resets.rst_sys_n[rstmgr_pkg::Domain0Sel]
+      }
+      type: ram_1p_adv
+      base_addr: 0x10000000
+      size: 0x20000
+      byte_write: "true"
+      integ_width: 7
+      exec: "1"
+      inter_signal_list:
+      [
+        {
+          struct: tl
+          package: tlul_pkg
+          type: req_rsp
+          act: rsp
+          name: tl
+          inst_name: ram_main
+          width: 1
+          default: ""
+          end_idx: -1
+          top_signame: ram_main_tl
+          index: -1
+        }
+        {
+          struct: sram_scr
+          package: sram_ctrl_pkg
+          type: req_rsp
+          name: sram_scr
+          act: rsp
+          inst_name: ram_main
+          index: -1
+        }
+        {
+          struct: sram_scr_init
+          package: sram_ctrl_pkg
+          type: req_rsp
+          name: sram_scr_init
+          act: rsp
+          inst_name: ram_main
+          index: -1
+        }
+        {
+          struct: tl_instr_en
+          package: tlul_pkg
+          type: uni
+          name: en_ifetch
+          act: rcv
+          inst_name: ram_main
+          index: -1
+        }
+        {
+          struct: logic
+          package: ""
+          type: uni
+          name: intg_error
+          act: req
+          inst_name: ram_main
+          index: -1
+        }
+        {
+          struct: ram_1p_cfg
+          package: prim_ram_1p_pkg
+          type: uni
+          name: cfg
+          act: rcv
+          inst_name: ram_main
+          width: 1
+          default: ""
+          top_signame: ast_ram_1p_cfg
+          index: -1
+        }
+      ]
+      clock_connections:
+      {
+        clk_i: clkmgr_aon_clocks.clk_main_infra
+      }
+      domain: "0"
+    }
+    {
+      name: ram_ret_aon
+      clock_srcs:
+      {
+        clk_i: io_div4
+      }
+      clock_group: infra
+      reset_connections:
+      {
+        rst_ni: rstmgr_aon_resets.rst_sys_io_div4_n[rstmgr_pkg::DomainAonSel]
+      }
+      domain: Aon
+      type: ram_1p_adv
+      base_addr: 0x40600000
+      size: 0x1000
+      byte_write: "true"
+      integ_width: 7
+      exec: "0"
+      inter_signal_list:
+      [
+        {
+          struct: tl
+          package: tlul_pkg
+          type: req_rsp
+          act: rsp
+          name: tl
+          inst_name: ram_ret_aon
+          width: 1
+          default: ""
+          end_idx: -1
+          top_signame: ram_ret_aon_tl
+          index: -1
+        }
+        {
+          struct: sram_scr
+          package: sram_ctrl_pkg
+          type: req_rsp
+          name: sram_scr
+          act: rsp
+          inst_name: ram_ret_aon
+          index: -1
+        }
+        {
+          struct: sram_scr_init
+          package: sram_ctrl_pkg
+          type: req_rsp
+          name: sram_scr_init
+          act: rsp
+          inst_name: ram_ret_aon
+          index: -1
+        }
+        {
+          struct: tl_instr_en
+          package: tlul_pkg
+          type: uni
+          name: en_ifetch
+          act: rcv
+          inst_name: ram_ret_aon
+          index: -1
+        }
+        {
+          struct: logic
+          package: ""
+          type: uni
+          name: intg_error
+          act: req
+          inst_name: ram_ret_aon
+          index: -1
+        }
+        {
+          struct: ram_1p_cfg
+          package: prim_ram_1p_pkg
+          type: uni
+          name: cfg
+          act: rcv
+          inst_name: ram_ret_aon
+          width: 1
+          default: ""
+          top_signame: ast_ram_1p_cfg
+          index: -1
+        }
+      ]
+      clock_connections:
+      {
+        clk_i: clkmgr_aon_clocks.clk_io_div4_infra
+      }
+    }
+    {
+      name: eflash
+      clock_srcs:
+      {
+        clk_i: main
+      }
+      clock_group: infra
+      reset_connections:
+      {
+        rst_ni: rstmgr_aon_resets.rst_lc_n[rstmgr_pkg::Domain0Sel]
+      }
+      type: eflash
+      base_addr: 0x20000000
+      banks: 2
+      pages_per_bank: 256
+      program_resolution: 8
+      swaccess: ro
+      inter_signal_list:
+      [
+        {
+          struct: flash
+          type: req_rsp
+          name: flash_ctrl
+          act: rsp
+          inst_name: eflash
+          width: 1
+          default: ""
+          package: flash_ctrl_pkg
+          top_signame: flash_ctrl_flash
+          index: -1
+        }
+        {
+          struct: tl
+          package: tlul_pkg
+          type: req_rsp
+          act: rsp
+          name: tl
+          inst_name: eflash
+          width: 1
+          default: ""
+          end_idx: -1
+          top_signame: eflash_tl
+          index: -1
+        }
+        {
+          struct: logic
+          package: ""
+          type: uni
+          act: rcv
+          name: flash_power_down_h
+          inst_name: eflash
+          width: 1
+          default: ""
+          external: true
+          top_signame: flash_power_down_h
+          index: -1
+        }
+        {
+          struct: logic
+          package: ""
+          type: uni
+          act: rcv
+          name: flash_power_ready_h
+          inst_name: eflash
+          width: 1
+          default: ""
+          external: true
+          top_signame: flash_power_ready_h
+          index: -1
+        }
+        {
+          struct: logic
+          package: ""
+          width: "4"
+          type: uni
+          act: rcv
+          name: flash_test_mode_a
+          inst_name: eflash
+          index: -1
+        }
+        {
+          struct: logic
+          package: ""
+          type: uni
+          act: rcv
+          name: flash_test_voltage_h
+          inst_name: eflash
+          index: -1
+        }
+        {
+          struct: ast_dif
+          package: ast_pkg
+          type: uni
+          act: req
+          name: flash_alert
+          inst_name: eflash
+          width: 1
+          default: ""
+          external: true
+          top_signame: flash_alert
+          index: -1
+        }
+      ]
+      clock_connections:
+      {
+        clk_i: clkmgr_aon_clocks.clk_main_infra
+      }
+      words_per_page: 256
+      data_width: 64
+      metadata_width: 12
+      info_types: 3
+      infos_per_bank:
+      [
+        10
+        1
+        2
+      ]
+      size: 0x100000
+      pgm_resolution_bytes: 64
+      domain: "0"
+    }
+  ]
+  port:
+  [
+    {
+      name: ast
+      inter_signal_list:
+      [
+        {
+          struct: ram_1p_cfg
+          package: prim_ram_1p_pkg
+          type: uni
+          name: ram_1p_cfg
+          act: rcv
+          inst_name: ast
+          width: 1
+          default: ""
+          end_idx: -1
+          top_type: broadcast
+          top_signame: ast_ram_1p_cfg
+          index: -1
+          external: true
+        }
+        {
+          struct: rom_cfg
+          package: prim_rom_pkg
+          type: uni
+          name: rom_cfg
+          act: rcv
+          inst_name: ast
+          width: 1
+          default: ""
+          end_idx: -1
+          top_type: broadcast
+          top_signame: ast_rom_cfg
+          index: -1
+          external: true
+        }
+      ]
+    }
+  ]
+  inter_module:
+  {
+    connect:
+    {
+      ast.ram_1p_cfg:
+      [
+        ram_main.cfg
+        ram_ret_aon.cfg
+        rv_core_ibex.ram_cfg
+      ]
+      ast.rom_cfg:
+      [
+        rom_ctrl.rom_cfg
+      ]
+      flash_ctrl.flash:
+      [
+        eflash.flash_ctrl
+      ]
+      pwrmgr_aon.pwr_flash:
+      [
+        flash_ctrl.pwrmgr
+      ]
+      pwrmgr_aon.pwr_rst:
+      [
+        rstmgr_aon.pwr
+      ]
+      pwrmgr_aon.pwr_clk:
+      [
+        clkmgr_aon.pwr
+      ]
+      rom_ctrl.pwrmgr_data:
+      [
+        pwrmgr_aon.rom_ctrl
+      ]
+      rv_core_ibex.crash_dump:
+      [
+        rstmgr_aon.cpu_dump
+      ]
+      pwrmgr_aon.wakeups:
+      [
+        sysrst_ctrl_aon.gsc_wk
+        aon_timer_aon.aon_timer_wkup_req
+      ]
+      pwrmgr_aon.rstreqs:
+      [
+        sysrst_ctrl_aon.gsc_rst
+        aon_timer_aon.aon_timer_rst_req
+      ]
+      rom_ctrl.rom_tl:
+      [
+        main.tl_rom_ctrl__rom
+      ]
+      rom_ctrl.regs_tl:
+      [
+        main.tl_rom_ctrl__regs
+      ]
+      ram_main.tl:
+      [
+        main.tl_ram_main
+      ]
+      eflash.tl:
+      [
+        main.tl_eflash
+      ]
+      main.tl_peri:
+      [
+        peri.tl_main
+      ]
+      flash_ctrl.core_tl:
+      [
+        main.tl_flash_ctrl__core
+      ]
+      flash_ctrl.prim_tl:
+      [
+        main.tl_flash_ctrl__prim
+      ]
+      rv_plic.tl:
+      [
+        main.tl_rv_plic
+      ]
+      uart0.tl:
+      [
+        peri.tl_uart0
+      ]
+      gpio.tl:
+      [
+        peri.tl_gpio
+      ]
+      rv_timer.tl:
+      [
+        peri.tl_rv_timer
+      ]
+      pwrmgr_aon.tl:
+      [
+        peri.tl_pwrmgr_aon
+      ]
+      rstmgr_aon.tl:
+      [
+        peri.tl_rstmgr_aon
+      ]
+      clkmgr_aon.tl:
+      [
+        peri.tl_clkmgr_aon
+      ]
+      ram_ret_aon.tl:
+      [
+        peri.tl_ram_ret_aon
+      ]
+      aon_timer_aon.tl:
+      [
+        peri.tl_aon_timer_aon
+      ]
+      sysrst_ctrl_aon.tl:
+      [
+        peri.tl_sysrst_ctrl_aon
+      ]
+    }
+    top:
+    [
+      rstmgr_aon.resets
+      rstmgr_aon.cpu
+      pwrmgr_aon.pwr_cpu
+      clkmgr_aon.clocks
+      pwrmgr_aon.fetch_en
+      main.tl_corei
+      main.tl_cored
+      main.tl_dm_sba
+      main.tl_debug_mem
+    ]
+    external:
+    {
+      ast.ram_1p_cfg: ram_1p_cfg
+      ast.rom_cfg: rom_cfg
+      clkmgr_aon.clk_main: clk_main
+      clkmgr_aon.clk_io: clk_io
+      clkmgr_aon.clk_usb: clk_usb
+      clkmgr_aon.clk_aon: clk_aon
+      clkmgr_aon.jitter_en: clk_main_jitter_en
+      clkmgr_aon.ast_clk_byp_req: ast_clk_byp_req
+      clkmgr_aon.ast_clk_byp_ack: ast_clk_byp_ack
+      eflash.flash_alert: flash_alert
+      eflash.flash_power_down_h: flash_power_down_h
+      eflash.flash_power_ready_h: flash_power_ready_h
+      peri.tl_ast: ast_tl
+      pwrmgr_aon.pwr_ast: pwrmgr_ast
+      clkmgr_aon.clocks_ast: clks_ast
+      rstmgr_aon.resets_ast: rsts_ast
+    }
+  }
+  xbar:
+  [
+    {
+      name: main
+      clock_srcs:
+      {
+        clk_main_i: main
+        clk_fixed_i: io_div4
+      }
+      clock_group: infra
+      reset: rst_main_ni
+      reset_connections:
+      {
+        rst_main_ni: rstmgr_aon_resets.rst_sys_n[rstmgr_pkg::Domain0Sel]
+        rst_fixed_ni: rstmgr_aon_resets.rst_sys_io_div4_n[rstmgr_pkg::Domain0Sel]
+      }
+      clock_connections:
+      {
+        clk_main_i: clkmgr_aon_clocks.clk_main_infra
+        clk_fixed_i: clkmgr_aon_clocks.clk_io_div4_infra
+      }
+      domain: "0"
+      connections:
+      {
+        corei:
+        [
+          rom_ctrl.rom
+          debug_mem
+          ram_main
+          eflash
+        ]
+        cored:
+        [
+          rom_ctrl.rom
+          rom_ctrl.regs
+          debug_mem
+          ram_main
+          eflash
+          peri
+          flash_ctrl.core
+          flash_ctrl.prim
+          rv_plic
+        ]
+        dm_sba:
+        [
+          rom_ctrl.rom
+          rom_ctrl.regs
+          ram_main
+          eflash
+          peri
+          flash_ctrl.core
+          flash_ctrl.prim
+          rv_plic
+        ]
+      }
+      nodes:
+      [
+        {
+          name: corei
+          type: host
+          clock: clk_main_i
+          reset: rst_main_ni
+          pipeline: "false"
+          xbar: false
+          stub: false
+          inst_type: rv_core_ibex
+          pipeline_byp: "true"
+        }
+        {
+          name: cored
+          type: host
+          clock: clk_main_i
+          reset: rst_main_ni
+          pipeline: "false"
+          xbar: false
+          stub: false
+          inst_type: rv_core_ibex
+          pipeline_byp: "true"
+        }
+        {
+          name: dm_sba
+          type: host
+          clock: clk_main_i
+          reset: rst_main_ni
+          pipeline_byp: "false"
+          xbar: false
+          stub: false
+          inst_type: rv_dm
+          pipeline: "true"
+        }
+        {
+          name: rom_ctrl.rom
+          type: device
+          clock: clk_main_i
+          reset: rst_main_ni
+          pipeline: "false"
+          inst_type: rom_ctrl
+          addr_range:
+          [
+            {
+              base_addr: 0x8000
+              size_byte: 0x4000
+            }
+          ]
+          xbar: false
+          stub: false
+          pipeline_byp: "true"
+        }
+        {
+          name: rom_ctrl.regs
+          type: device
+          clock: clk_main_i
+          reset: rst_main_ni
+          pipeline: "false"
+          inst_type: rom_ctrl
+          addr_range:
+          [
+            {
+              base_addr: 0x411e0000
+              size_byte: 0x1000
+            }
+          ]
+          xbar: false
+          stub: false
+          pipeline_byp: "true"
+        }
+        {
+          name: debug_mem
+          type: device
+          clock: clk_main_i
+          reset: rst_main_ni
+          pipeline_byp: "false"
+          inst_type: rv_dm
+          addr_range:
+          [
+            {
+              base_addr: 0x1A110000
+              size_byte: 0x1000
+            }
+          ]
+          xbar: false
+          stub: false
+          pipeline: "true"
+        }
+        {
+          name: ram_main
+          type: device
+          clock: clk_main_i
+          reset: rst_main_ni
+          pipeline: "false"
+          inst_type: ram_1p_adv
+          addr_range:
+          [
+            {
+              base_addr: 0x10000000
+              size_byte: 0x20000
+            }
+          ]
+          xbar: false
+          stub: false
+          pipeline_byp: "true"
+        }
+        {
+          name: eflash
+          type: device
+          clock: clk_main_i
+          reset: rst_main_ni
+          pipeline: "false"
+          inst_type: eflash
+          addr_range:
+          [
+            {
+              base_addr: 0x20000000
+              size_byte: 0x100000
+            }
+          ]
+          xbar: false
+          stub: false
+          pipeline_byp: "true"
+        }
+        {
+          name: peri
+          type: device
+          clock: clk_fixed_i
+          reset: rst_fixed_ni
+          pipeline_byp: "false"
+          xbar: true
+          stub: false
+          pipeline: "true"
+          addr_range:
+          [
+            {
+              base_addr: 0x40000000
+              size_byte: 0x800000
+            }
+          ]
+        }
+        {
+          name: flash_ctrl.core
+          type: device
+          clock: clk_main_i
+          reset: rst_main_ni
+          pipeline_byp: "false"
+          inst_type: flash_ctrl
+          addr_range:
+          [
+            {
+              base_addr: 0x41000000
+              size_byte: 0x1000
+            }
+          ]
+          xbar: false
+          stub: false
+          pipeline: "true"
+        }
+        {
+          name: flash_ctrl.prim
+          type: device
+          clock: clk_main_i
+          reset: rst_main_ni
+          pipeline_byp: "false"
+          inst_type: flash_ctrl
+          addr_range:
+          [
+            {
+              base_addr: 0x41008000
+              size_byte: 0x1000
+            }
+          ]
+          xbar: false
+          stub: false
+          pipeline: "true"
+        }
+        {
+          name: rv_plic
+          type: device
+          clock: clk_main_i
+          reset: rst_main_ni
+          inst_type: rv_plic
+          addr_range:
+          [
+            {
+              base_addr: 0x41010000
+              size_byte: 0x1000
+            }
+          ]
+          pipeline_byp: "false"
+          xbar: false
+          stub: false
+          pipeline: "true"
+        }
+      ]
+      clock: clk_main_i
+      type: xbar
+      inter_signal_list:
+      [
+        {
+          name: tl_corei
+          struct: tl
+          package: tlul_pkg
+          type: req_rsp
+          act: rsp
+          width: 1
+          inst_name: main
+          default: ""
+          top_signame: main_tl_corei
+          index: -1
+        }
+        {
+          name: tl_cored
+          struct: tl
+          package: tlul_pkg
+          type: req_rsp
+          act: rsp
+          width: 1
+          inst_name: main
+          default: ""
+          top_signame: main_tl_cored
+          index: -1
+        }
+        {
+          name: tl_dm_sba
+          struct: tl
+          package: tlul_pkg
+          type: req_rsp
+          act: rsp
+          width: 1
+          inst_name: main
+          default: ""
+          top_signame: main_tl_dm_sba
+          index: -1
+        }
+        {
+          name: tl_rom_ctrl__rom
+          struct: tl
+          package: tlul_pkg
+          type: req_rsp
+          act: req
+          width: 1
+          inst_name: main
+          default: ""
+          top_signame: rom_ctrl_rom_tl
+          index: -1
+        }
+        {
+          name: tl_rom_ctrl__regs
+          struct: tl
+          package: tlul_pkg
+          type: req_rsp
+          act: req
+          width: 1
+          inst_name: main
+          default: ""
+          top_signame: rom_ctrl_regs_tl
+          index: -1
+        }
+        {
+          name: tl_debug_mem
+          struct: tl
+          package: tlul_pkg
+          type: req_rsp
+          act: req
+          width: 1
+          inst_name: main
+          default: ""
+          top_signame: main_tl_debug_mem
+          index: -1
+        }
+        {
+          name: tl_ram_main
+          struct: tl
+          package: tlul_pkg
+          type: req_rsp
+          act: req
+          width: 1
+          inst_name: main
+          default: ""
+          top_signame: ram_main_tl
+          index: -1
+        }
+        {
+          name: tl_eflash
+          struct: tl
+          package: tlul_pkg
+          type: req_rsp
+          act: req
+          width: 1
+          inst_name: main
+          default: ""
+          top_signame: eflash_tl
+          index: -1
+        }
+        {
+          name: tl_peri
+          struct: tl
+          package: tlul_pkg
+          type: req_rsp
+          act: req
+          width: 1
+          inst_name: main
+          default: ""
+          end_idx: -1
+          top_signame: main_tl_peri
+          index: -1
+        }
+        {
+          name: tl_flash_ctrl__core
+          struct: tl
+          package: tlul_pkg
+          type: req_rsp
+          act: req
+          width: 1
+          inst_name: main
+          default: ""
+          top_signame: flash_ctrl_core_tl
+          index: -1
+        }
+        {
+          name: tl_flash_ctrl__prim
+          struct: tl
+          package: tlul_pkg
+          type: req_rsp
+          act: req
+          width: 1
+          inst_name: main
+          default: ""
+          top_signame: flash_ctrl_prim_tl
+          index: -1
+        }
+        {
+          name: tl_rv_plic
+          struct: tl
+          package: tlul_pkg
+          type: req_rsp
+          act: req
+          width: 1
+          inst_name: main
+          default: ""
+          top_signame: rv_plic_tl
+          index: -1
+        }
+      ]
+    }
+    {
+      name: peri
+      clock_srcs:
+      {
+        clk_peri_i: io_div4
+      }
+      clock_group: infra
+      reset: rst_peri_ni
+      reset_connections:
+      {
+        rst_peri_ni: rstmgr_aon_resets.rst_sys_io_div4_n[rstmgr_pkg::Domain0Sel]
+      }
+      clock_connections:
+      {
+        clk_peri_i: clkmgr_aon_clocks.clk_io_div4_infra
+      }
+      domain: "0"
+      connections:
+      {
+        main:
+        [
+          uart0
+          gpio
+          rv_timer
+          pwrmgr_aon
+          rstmgr_aon
+          clkmgr_aon
+          ram_ret_aon
+          ast
+          aon_timer_aon
+          sysrst_ctrl_aon
+        ]
+      }
+      nodes:
+      [
+        {
+          name: main
+          type: host
+          clock: clk_peri_i
+          reset: rst_peri_ni
+          xbar: true
+          pipeline: "false"
+          stub: false
+          inst_type: ""
+          pipeline_byp: "true"
+        }
+        {
+          name: uart0
+          type: device
+          clock: clk_peri_i
+          reset: rst_peri_ni
+          pipeline: "false"
+          inst_type: uart
+          addr_range:
+          [
+            {
+              base_addr: 0x40000000
+              size_byte: 0x1000
+            }
+          ]
+          xbar: false
+          stub: false
+          pipeline_byp: "true"
+        }
+        {
+          name: gpio
+          type: device
+          clock: clk_peri_i
+          reset: rst_peri_ni
+          pipeline: "false"
+          inst_type: gpio
+          addr_range:
+          [
+            {
+              base_addr: 0x40040000
+              size_byte: 0x1000
+            }
+          ]
+          xbar: false
+          stub: false
+          pipeline_byp: "true"
+        }
+        {
+          name: rv_timer
+          type: device
+          clock: clk_peri_i
+          reset: rst_peri_ni
+          pipeline: "false"
+          inst_type: rv_timer
+          addr_range:
+          [
+            {
+              base_addr: 0x40100000
+              size_byte: 0x1000
+            }
+          ]
+          xbar: false
+          stub: false
+          pipeline_byp: "true"
+        }
+        {
+          name: pwrmgr_aon
+          type: device
+          clock: clk_peri_i
+          reset: rst_peri_ni
+          pipeline: "false"
+          inst_type: pwrmgr
+          addr_range:
+          [
+            {
+              base_addr: 0x40400000
+              size_byte: 0x1000
+            }
+          ]
+          xbar: false
+          stub: false
+          pipeline_byp: "true"
+        }
+        {
+          name: rstmgr_aon
+          type: device
+          clock: clk_peri_i
+          reset: rst_peri_ni
+          pipeline: "false"
+          inst_type: rstmgr
+          addr_range:
+          [
+            {
+              base_addr: 0x40410000
+              size_byte: 0x1000
+            }
+          ]
+          xbar: false
+          stub: false
+          pipeline_byp: "true"
+        }
+        {
+          name: clkmgr_aon
+          type: device
+          clock: clk_peri_i
+          reset: rst_peri_ni
+          pipeline: "false"
+          inst_type: clkmgr
+          addr_range:
+          [
+            {
+              base_addr: 0x40420000
+              size_byte: 0x1000
+            }
+          ]
+          xbar: false
+          stub: false
+          pipeline_byp: "true"
+        }
+        {
+          name: ram_ret_aon
+          type: device
+          clock: clk_peri_i
+          reset: rst_peri_ni
+          pipeline: "false"
+          inst_type: ram_1p_adv
+          addr_range:
+          [
+            {
+              base_addr: 0x40600000
+              size_byte: 0x1000
+            }
+          ]
+          xbar: false
+          stub: false
+          pipeline_byp: "true"
+        }
+        {
+          name: aon_timer_aon
+          type: device
+          clock: clk_peri_i
+          reset: rst_peri_ni
+          pipeline: "false"
+          inst_type: aon_timer
+          addr_range:
+          [
+            {
+              base_addr: 0x40470000
+              size_byte: 0x1000
+            }
+          ]
+          xbar: false
+          stub: false
+          pipeline_byp: "true"
+        }
+        {
+          name: sysrst_ctrl_aon
+          type: device
+          clock: clk_peri_i
+          reset: rst_peri_ni
+          pipeline: "false"
+          inst_type: sysrst_ctrl
+          addr_range:
+          [
+            {
+              base_addr: 0x40430000
+              size_byte: 0x1000
+            }
+          ]
+          xbar: false
+          stub: false
+          pipeline_byp: "true"
+        }
+        {
+          name: ast
+          type: device
+          clock: clk_peri_i
+          reset: rst_peri_ni
+          pipeline: "false"
+          inst_type: ast
+          addr_range:
+          [
+            {
+              base_addr: 0x40480000
+              size_byte: 0x1000
+            }
+          ]
+          xbar: false
+          stub: true
+          pipeline_byp: "true"
+        }
+      ]
+      clock: clk_peri_i
+      type: xbar
+      inter_signal_list:
+      [
+        {
+          name: tl_main
+          struct: tl
+          package: tlul_pkg
+          type: req_rsp
+          act: rsp
+          width: 1
+          inst_name: peri
+          default: ""
+          top_signame: main_tl_peri
+          index: -1
+        }
+        {
+          name: tl_uart0
+          struct: tl
+          package: tlul_pkg
+          type: req_rsp
+          act: req
+          width: 1
+          inst_name: peri
+          default: ""
+          top_signame: uart0_tl
+          index: -1
+        }
+        {
+          name: tl_gpio
+          struct: tl
+          package: tlul_pkg
+          type: req_rsp
+          act: req
+          width: 1
+          inst_name: peri
+          default: ""
+          top_signame: gpio_tl
+          index: -1
+        }
+        {
+          name: tl_rv_timer
+          struct: tl
+          package: tlul_pkg
+          type: req_rsp
+          act: req
+          width: 1
+          inst_name: peri
+          default: ""
+          top_signame: rv_timer_tl
+          index: -1
+        }
+        {
+          name: tl_pwrmgr_aon
+          struct: tl
+          package: tlul_pkg
+          type: req_rsp
+          act: req
+          width: 1
+          inst_name: peri
+          default: ""
+          top_signame: pwrmgr_aon_tl
+          index: -1
+        }
+        {
+          name: tl_rstmgr_aon
+          struct: tl
+          package: tlul_pkg
+          type: req_rsp
+          act: req
+          width: 1
+          inst_name: peri
+          default: ""
+          top_signame: rstmgr_aon_tl
+          index: -1
+        }
+        {
+          name: tl_clkmgr_aon
+          struct: tl
+          package: tlul_pkg
+          type: req_rsp
+          act: req
+          width: 1
+          inst_name: peri
+          default: ""
+          top_signame: clkmgr_aon_tl
+          index: -1
+        }
+        {
+          name: tl_ram_ret_aon
+          struct: tl
+          package: tlul_pkg
+          type: req_rsp
+          act: req
+          width: 1
+          inst_name: peri
+          default: ""
+          top_signame: ram_ret_aon_tl
+          index: -1
+        }
+        {
+          name: tl_aon_timer_aon
+          struct: tl
+          package: tlul_pkg
+          type: req_rsp
+          act: req
+          width: 1
+          inst_name: peri
+          default: ""
+          top_signame: aon_timer_aon_tl
+          index: -1
+        }
+        {
+          name: tl_sysrst_ctrl_aon
+          struct: tl
+          package: tlul_pkg
+          type: req_rsp
+          act: req
+          width: 1
+          inst_name: peri
+          default: ""
+          top_signame: sysrst_ctrl_aon_tl
+          index: -1
+        }
+        {
+          name: tl_ast
+          struct: tl
+          package: tlul_pkg
+          type: req_rsp
+          act: req
+          width: 1
+          inst_name: peri
+          default: ""
+          external: true
+          top_signame: ast_tl
+          index: -1
+        }
+      ]
+    }
+  ]
+  targets: []
+  exported_clks:
+  {
+    ast:
+    {
+      ast:
+      [
+        io_div4_secure
+      ]
+    }
+  }
+  wakeups:
+  [
+    {
+      name: gsc_wk
+      width: "1"
+      module: sysrst_ctrl_aon
+    }
+    {
+      name: aon_timer_wkup_req
+      width: "1"
+      module: aon_timer_aon
+    }
+  ]
+  reset_requests:
+  [
+    {
+      name: gsc_rst
+      width: "1"
+      module: sysrst_ctrl_aon
+    }
+    {
+      name: aon_timer_rst_req
+      width: "1"
+      module: aon_timer_aon
+    }
+  ]
+  interrupt_module:
+  [
+    uart0
+    gpio
+    rv_timer
+    pwrmgr_aon
+    sysrst_ctrl_aon
+    aon_timer_aon
+    flash_ctrl
+  ]
+  interrupt:
+  [
+    {
+      name: uart0_tx_watermark
+      width: 1
+      type: interrupt
+      module_name: uart0
+    }
+    {
+      name: uart0_rx_watermark
+      width: 1
+      type: interrupt
+      module_name: uart0
+    }
+    {
+      name: uart0_tx_empty
+      width: 1
+      type: interrupt
+      module_name: uart0
+    }
+    {
+      name: uart0_rx_overflow
+      width: 1
+      type: interrupt
+      module_name: uart0
+    }
+    {
+      name: uart0_rx_frame_err
+      width: 1
+      type: interrupt
+      module_name: uart0
+    }
+    {
+      name: uart0_rx_break_err
+      width: 1
+      type: interrupt
+      module_name: uart0
+    }
+    {
+      name: uart0_rx_timeout
+      width: 1
+      type: interrupt
+      module_name: uart0
+    }
+    {
+      name: uart0_rx_parity_err
+      width: 1
+      type: interrupt
+      module_name: uart0
+    }
+    {
+      name: gpio_gpio
+      width: 32
+      type: interrupt
+      module_name: gpio
+    }
+    {
+      name: rv_timer_timer_expired_0_0
+      width: 1
+      type: interrupt
+      module_name: rv_timer
+    }
+    {
+      name: pwrmgr_aon_wakeup
+      width: 1
+      type: interrupt
+      module_name: pwrmgr_aon
+    }
+    {
+      name: sysrst_ctrl_aon_sysrst_ctrl
+      width: 1
+      type: interrupt
+      module_name: sysrst_ctrl_aon
+    }
+    {
+      name: aon_timer_aon_wkup_timer_expired
+      width: 1
+      type: interrupt
+      module_name: aon_timer_aon
+    }
+    {
+      name: aon_timer_aon_wdog_timer_bark
+      width: 1
+      type: interrupt
+      module_name: aon_timer_aon
+    }
+    {
+      name: flash_ctrl_prog_empty
+      width: 1
+      type: interrupt
+      module_name: flash_ctrl
+    }
+    {
+      name: flash_ctrl_prog_lvl
+      width: 1
+      type: interrupt
+      module_name: flash_ctrl
+    }
+    {
+      name: flash_ctrl_rd_full
+      width: 1
+      type: interrupt
+      module_name: flash_ctrl
+    }
+    {
+      name: flash_ctrl_rd_lvl
+      width: 1
+      type: interrupt
+      module_name: flash_ctrl
+    }
+    {
+      name: flash_ctrl_op_done
+      width: 1
+      type: interrupt
+      module_name: flash_ctrl
+    }
+    {
+      name: flash_ctrl_err
+      width: 1
+      type: interrupt
+      module_name: flash_ctrl
+    }
+  ]
+  alert_module:
+  [
+    flash_ctrl
+    rom_ctrl
+  ]
+  alert:
+  [
+    {
+      name: flash_ctrl_recov_err
+      width: 1
+      type: alert
+      async: "1"
+      module_name: flash_ctrl
+    }
+    {
+      name: flash_ctrl_recov_mp_err
+      width: 1
+      type: alert
+      async: "1"
+      module_name: flash_ctrl
+    }
+    {
+      name: flash_ctrl_recov_ecc_err
+      width: 1
+      type: alert
+      async: "1"
+      module_name: flash_ctrl
+    }
+    {
+      name: flash_ctrl_fatal_intg_err
+      width: 1
+      type: alert
+      async: "1"
+      module_name: flash_ctrl
+    }
+    {
+      name: rom_ctrl_fatal
+      width: 1
+      type: alert
+      async: "1"
+      module_name: rom_ctrl
+    }
+  ]
+  exported_rsts:
+  {
+    ast:
+    {
+      ast:
+      [
+        sys_io_div4
+      ]
+    }
+  }
+  reset_paths:
+  {
+    rst_ni: rst_ni
+    por_aon: rstmgr_aon_resets.rst_por_aon_n
+    por: rstmgr_aon_resets.rst_por_n
+    por_io: rstmgr_aon_resets.rst_por_io_n
+    por_io_div2: rstmgr_aon_resets.rst_por_io_div2_n
+    por_io_div4: rstmgr_aon_resets.rst_por_io_div4_n
+    por_usb: rstmgr_aon_resets.rst_por_usb_n
+    lc: rstmgr_aon_resets.rst_lc_n
+    lc_io_div4: rstmgr_aon_resets.rst_lc_io_div4_n
+    sys: rstmgr_aon_resets.rst_sys_n
+    sys_io_div4: rstmgr_aon_resets.rst_sys_io_div4_n
+    sys_aon: rstmgr_aon_resets.rst_sys_aon_n
+    usb: rstmgr_aon_resets.rst_usb_n
+  }
+  inter_signal:
+  {
+    signals:
+    [
+      {
+        name: tl
+        struct: tl
+        package: tlul_pkg
+        type: req_rsp
+        act: rsp
+        width: 1
+        inst_name: uart0
+        default: ""
+        end_idx: -1
+        top_signame: uart0_tl
+        index: -1
+      }
+      {
+        name: tl
+        struct: tl
+        package: tlul_pkg
+        type: req_rsp
+        act: rsp
+        width: 1
+        inst_name: gpio
+        default: ""
+        end_idx: -1
+        top_signame: gpio_tl
+        index: -1
+      }
+      {
+        name: tl
+        struct: tl
+        package: tlul_pkg
+        type: req_rsp
+        act: rsp
+        width: 1
+        inst_name: rv_timer
+        default: ""
+        end_idx: -1
+        top_signame: rv_timer_tl
+        index: -1
+      }
+      {
+        name: pwr_ast
+        struct: pwr_ast
+        package: pwrmgr_pkg
+        type: req_rsp
+        act: req
+        width: 1
+        inst_name: pwrmgr_aon
+        default: ""
+        external: true
+        top_signame: pwrmgr_ast
+        index: -1
+      }
+      {
+        name: pwr_rst
+        struct: pwr_rst
+        package: pwrmgr_pkg
+        type: req_rsp
+        act: req
+        width: 1
+        inst_name: pwrmgr_aon
+        default: ""
+        end_idx: -1
+        top_signame: pwrmgr_aon_pwr_rst
+        index: -1
+      }
+      {
+        name: pwr_clk
+        struct: pwr_clk
+        package: pwrmgr_pkg
+        type: req_rsp
+        act: req
+        width: 1
+        inst_name: pwrmgr_aon
+        default: ""
+        end_idx: -1
+        top_signame: pwrmgr_aon_pwr_clk
+        index: -1
+      }
+      {
+        name: pwr_otp
+        struct: pwr_otp
+        package: pwrmgr_pkg
+        type: req_rsp
+        act: req
+        width: 1
+        inst_name: pwrmgr_aon
+        index: -1
+      }
+      {
+        name: pwr_lc
+        struct: pwr_lc
+        package: pwrmgr_pkg
+        type: req_rsp
+        act: req
+        width: 1
+        inst_name: pwrmgr_aon
+        index: -1
+      }
+      {
+        name: pwr_flash
+        struct: pwr_flash
+        package: pwrmgr_pkg
+        type: uni
+        act: rcv
+        width: 1
+        inst_name: pwrmgr_aon
+        default: ""
+        end_idx: -1
+        top_type: broadcast
+        top_signame: pwrmgr_aon_pwr_flash
+        index: -1
+      }
+      {
+        name: esc_rst_tx
+        struct: esc_tx
+        package: prim_esc_pkg
+        type: uni
+        act: rcv
+        width: 1
+        inst_name: pwrmgr_aon
+        index: -1
+      }
+      {
+        name: esc_rst_rx
+        struct: esc_rx
+        package: prim_esc_pkg
+        type: uni
+        act: req
+        width: 1
+        inst_name: pwrmgr_aon
+        index: -1
+      }
+      {
+        name: pwr_cpu
+        struct: pwr_cpu
+        package: pwrmgr_pkg
+        type: uni
+        act: rcv
+        width: 1
+        inst_name: pwrmgr_aon
+        default: ""
+        top_signame: pwrmgr_aon_pwr_cpu
+        index: -1
+      }
+      {
+        name: wakeups
+        struct: logic
+        type: uni
+        act: rcv
+        width: 2
+        inst_name: pwrmgr_aon
+        default: ""
+        package: ""
+        end_idx: -1
+        top_type: one-to-N
+        top_signame: pwrmgr_aon_wakeups
+        index: -1
+      }
+      {
+        name: rstreqs
+        struct: logic
+        type: uni
+        act: rcv
+        width: 2
+        inst_name: pwrmgr_aon
+        default: ""
+        package: ""
+        end_idx: -1
+        top_type: one-to-N
+        top_signame: pwrmgr_aon_rstreqs
+        index: -1
+      }
+      {
+        name: strap
+        struct: logic
+        type: uni
+        act: req
+        width: 1
+        inst_name: pwrmgr_aon
+        index: -1
+      }
+      {
+        name: low_power
+        struct: logic
+        type: uni
+        act: req
+        width: 1
+        inst_name: pwrmgr_aon
+        index: -1
+      }
+      {
+        name: rom_ctrl
+        struct: pwrmgr_data
+        package: rom_ctrl_pkg
+        type: uni
+        act: rcv
+        width: 1
+        inst_name: pwrmgr_aon
+        default: ""
+        top_signame: rom_ctrl_pwrmgr_data
+        index: -1
+      }
+      {
+        name: fetch_en
+        struct: lc_tx
+        package: vk_athos_pkg
+        type: uni
+        act: req
+        width: 1
+        inst_name: pwrmgr_aon
+        default: ""
+        top_signame: pwrmgr_aon_fetch_en
+        index: -1
+      }
+      {
+        name: tl
+        struct: tl
+        package: tlul_pkg
+        type: req_rsp
+        act: rsp
+        width: 1
+        inst_name: pwrmgr_aon
+        default: ""
+        end_idx: -1
+        top_signame: pwrmgr_aon_tl
+        index: -1
+      }
+      {
+        name: pwr
+        struct: pwr_rst
+        type: req_rsp
+        act: rsp
+        width: 1
+        inst_name: rstmgr_aon
+        default: ""
+        package: pwrmgr_pkg
+        top_signame: pwrmgr_aon_pwr_rst
+        index: -1
+      }
+      {
+        name: resets
+        struct: rstmgr_out
+        package: rstmgr_pkg
+        type: uni
+        act: req
+        width: 1
+        inst_name: rstmgr_aon
+        default: ""
+        top_signame: rstmgr_aon_resets
+        index: -1
+      }
+      {
+        name: cpu
+        struct: rstmgr_cpu
+        package: rstmgr_pkg
+        type: uni
+        act: rcv
+        width: 1
+        inst_name: rstmgr_aon
+        default: ""
+        top_signame: rstmgr_aon_cpu
+        index: -1
+      }
+      {
+        name: alert_dump
+        struct: alert_crashdump
+        package: vk_athos_pkg
+        type: uni
+        act: rcv
+        width: 1
+        default: 1'b0
+        inst_name: rstmgr_aon
+        index: -1
+      }
+      {
+        name: cpu_dump
+        struct: crash_dump
+        package: ibex_pkg
+        type: uni
+        act: rcv
+        width: 1
+        inst_name: rstmgr_aon
+        default: ""
+        top_signame: rv_core_ibex_crash_dump
+        index: -1
+      }
+      {
+        name: resets_ast
+        struct: rstmgr_ast_out
+        package: rstmgr_pkg
+        type: uni
+        act: req
+        width: 1
+        inst_name: rstmgr_aon
+        default: ""
+        external: true
+        top_signame: rsts_ast
+        index: -1
+      }
+      {
+        name: tl
+        struct: tl
+        package: tlul_pkg
+        type: req_rsp
+        act: rsp
+        width: 1
+        inst_name: rstmgr_aon
+        default: ""
+        end_idx: -1
+        top_signame: rstmgr_aon_tl
+        index: -1
+      }
+      {
+        name: clocks
+        struct: clkmgr_out
+        package: clkmgr_pkg
+        type: uni
+        act: req
+        width: 1
+        inst_name: clkmgr_aon
+        default: ""
+        top_signame: clkmgr_aon_clocks
+        index: -1
+      }
+      {
+        name: lc_dft_en
+        struct: lc_tx
+        package: vk_athos_pkg
+        type: uni
+        act: rcv
+        width: 1
+        inst_name: clkmgr_aon
+        index: -1
+      }
+      {
+        name: ast_clk_byp_req
+        struct: lc_tx
+        package: vk_athos_pkg
+        type: uni
+        act: req
+        width: 1
+        inst_name: clkmgr_aon
+        default: ""
+        external: true
+        top_signame: ast_clk_byp_req
+        index: -1
+      }
+      {
+        name: ast_clk_byp_ack
+        struct: lc_tx
+        package: vk_athos_pkg
+        type: uni
+        act: rcv
+        width: 1
+        inst_name: clkmgr_aon
+        default: ""
+        external: true
+        top_signame: ast_clk_byp_ack
+        index: -1
+      }
+      {
+        name: lc_clk_byp_req
+        struct: lc_tx
+        package: vk_athos_pkg
+        type: uni
+        act: rcv
+        width: 1
+        inst_name: clkmgr_aon
+        index: -1
+      }
+      {
+        name: lc_clk_byp_ack
+        struct: lc_tx
+        package: vk_athos_pkg
+        type: uni
+        act: req
+        width: 1
+        inst_name: clkmgr_aon
+        index: -1
+      }
+      {
+        name: jitter_en
+        struct: logic
+        type: uni
+        act: req
+        width: 1
+        inst_name: clkmgr_aon
+        default: ""
+        package: ""
+        external: true
+        top_signame: clk_main_jitter_en
+        index: -1
+      }
+      {
+        name: clk_main
+        struct: logic
+        type: uni
+        act: rcv
+        width: 1
+        inst_name: clkmgr_aon
+        default: ""
+        package: ""
+        external: true
+        top_signame: clk_main
+        index: -1
+      }
+      {
+        name: clk_io
+        struct: logic
+        type: uni
+        act: rcv
+        width: 1
+        inst_name: clkmgr_aon
+        default: ""
+        package: ""
+        external: true
+        top_signame: clk_io
+        index: -1
+      }
+      {
+        name: clk_usb
+        struct: logic
+        type: uni
+        act: rcv
+        width: 1
+        inst_name: clkmgr_aon
+        default: ""
+        package: ""
+        external: true
+        top_signame: clk_usb
+        index: -1
+      }
+      {
+        name: clk_aon
+        struct: logic
+        type: uni
+        act: rcv
+        width: 1
+        inst_name: clkmgr_aon
+        default: ""
+        package: ""
+        external: true
+        top_signame: clk_aon
+        index: -1
+      }
+      {
+        name: clocks_ast
+        struct: clkmgr_ast_out
+        package: clkmgr_pkg
+        type: uni
+        act: req
+        width: 1
+        inst_name: clkmgr_aon
+        default: ""
+        external: true
+        top_signame: clks_ast
+        index: -1
+      }
+      {
+        name: pwr
+        struct: pwr_clk
+        type: req_rsp
+        act: rsp
+        width: 1
+        inst_name: clkmgr_aon
+        default: ""
+        package: pwrmgr_pkg
+        top_signame: pwrmgr_aon_pwr_clk
+        index: -1
+      }
+      {
+        name: tl
+        struct: tl
+        package: tlul_pkg
+        type: req_rsp
+        act: rsp
+        width: 1
+        inst_name: clkmgr_aon
+        default: ""
+        end_idx: -1
+        top_signame: clkmgr_aon_tl
+        index: -1
+      }
+      {
+        name: gsc_wk
+        struct: logic
+        type: uni
+        act: req
+        width: 1
+        inst_name: sysrst_ctrl_aon
+        default: ""
+        package: ""
+        top_signame: pwrmgr_aon_wakeups
+        index: 0
+      }
+      {
+        name: gsc_rst
+        struct: logic
+        type: uni
+        act: req
+        width: 1
+        inst_name: sysrst_ctrl_aon
+        default: ""
+        package: ""
+        top_signame: pwrmgr_aon_rstreqs
+        index: 0
+      }
+      {
+        name: tl
+        struct: tl
+        package: tlul_pkg
+        type: req_rsp
+        act: rsp
+        width: 1
+        inst_name: sysrst_ctrl_aon
+        default: ""
+        end_idx: -1
+        top_signame: sysrst_ctrl_aon_tl
+        index: -1
+      }
+      {
+        name: aon_timer_wkup_req
+        struct: logic
+        type: uni
+        act: req
+        width: 1
+        default: 1'b0
+        inst_name: aon_timer_aon
+        package: ""
+        top_signame: pwrmgr_aon_wakeups
+        index: 1
+      }
+      {
+        name: aon_timer_rst_req
+        struct: logic
+        type: uni
+        act: req
+        width: 1
+        default: 1'b0
+        inst_name: aon_timer_aon
+        package: ""
+        top_signame: pwrmgr_aon_rstreqs
+        index: 1
+      }
+      {
+        name: lc_escalate_en
+        struct: lc_tx
+        package: vk_athos_pkg
+        type: uni
+        act: rcv
+        width: 1
+        default: vk_athos_pkg::Off
+        inst_name: aon_timer_aon
+        index: -1
+      }
+      {
+        name: sleep_mode
+        struct: logic
+        type: uni
+        act: rcv
+        width: 1
+        inst_name: aon_timer_aon
+        index: -1
+      }
+      {
+        name: tl
+        struct: tl
+        package: tlul_pkg
+        type: req_rsp
+        act: rsp
+        width: 1
+        inst_name: aon_timer_aon
+        default: ""
+        end_idx: -1
+        top_signame: aon_timer_aon_tl
+        index: -1
+      }
+      {
+        name: tl
+        struct: tl
+        package: tlul_pkg
+        type: req_rsp
+        act: rsp
+        width: 1
+        inst_name: ast
+        index: -1
+      }
+      {
+        name: flash
+        struct: flash
+        package: flash_ctrl_pkg
+        type: req_rsp
+        act: req
+        width: 1
+        inst_name: flash_ctrl
+        default: ""
+        end_idx: -1
+        top_signame: flash_ctrl_flash
+        index: -1
+      }
+      {
+        name: otp
+        struct: flash_otp_key
+        package: vk_athos_pkg
+        type: req_rsp
+        act: req
+        width: 1
+        inst_name: flash_ctrl
+        index: -1
+      }
+      {
+        name: lc_creator_seed_sw_rw_en
+        struct: lc_tx
+        package: vk_athos_pkg
+        type: uni
+        act: rcv
+        width: 1
+        inst_name: flash_ctrl
+        index: -1
+      }
+      {
+        name: lc_owner_seed_sw_rw_en
+        struct: lc_tx
+        package: vk_athos_pkg
+        type: uni
+        act: rcv
+        width: 1
+        inst_name: flash_ctrl
+        index: -1
+      }
+      {
+        name: lc_iso_part_sw_rd_en
+        struct: lc_tx
+        package: vk_athos_pkg
+        type: uni
+        act: rcv
+        width: 1
+        inst_name: flash_ctrl
+        index: -1
+      }
+      {
+        name: lc_iso_part_sw_wr_en
+        struct: lc_tx
+        package: vk_athos_pkg
+        type: uni
+        act: rcv
+        width: 1
+        inst_name: flash_ctrl
+        index: -1
+      }
+      {
+        name: lc_seed_hw_rd_en
+        struct: lc_tx
+        package: vk_athos_pkg
+        type: uni
+        act: rcv
+        width: 1
+        inst_name: flash_ctrl
+        index: -1
+      }
+      {
+        name: rma_req
+        struct: lc_tx
+        package: vk_athos_pkg
+        type: uni
+        act: rcv
+        width: 1
+        inst_name: flash_ctrl
+        index: -1
+      }
+      {
+        name: rma_ack
+        struct: lc_tx
+        package: vk_athos_pkg
+        type: uni
+        act: req
+        width: 1
+        inst_name: flash_ctrl
+        index: -1
+      }
+      {
+        name: rma_seed
+        struct: lc_flash_rma_seed
+        package: vk_athos_pkg
+        type: uni
+        act: rcv
+        width: 1
+        default: "'b0"
+        inst_name: flash_ctrl
+        index: -1
+      }
+      {
+        name: pwrmgr
+        struct: pwr_flash
+        package: pwrmgr_pkg
+        type: uni
+        act: req
+        width: 1
+        inst_name: flash_ctrl
+        default: ""
+        top_signame: pwrmgr_aon_pwr_flash
+        index: -1
+      }
+      {
+        name: keymgr
+        struct: keymgr_flash
+        package: flash_ctrl_pkg
+        type: uni
+        act: req
+        width: 1
+        inst_name: flash_ctrl
+        index: -1
+      }
+      {
+        name: core_tl
+        struct: tl
+        package: tlul_pkg
+        type: req_rsp
+        act: rsp
+        width: 1
+        inst_name: flash_ctrl
+        default: ""
+        end_idx: -1
+        top_signame: flash_ctrl_core_tl
+        index: -1
+      }
+      {
+        name: prim_tl
+        struct: tl
+        package: tlul_pkg
+        type: req_rsp
+        act: rsp
+        width: 1
+        inst_name: flash_ctrl
+        default: ""
+        end_idx: -1
+        top_signame: flash_ctrl_prim_tl
+        index: -1
+      }
+      {
+        name: tl
+        struct: tl
+        package: tlul_pkg
+        type: req_rsp
+        act: rsp
+        width: 1
+        inst_name: rv_plic
+        default: ""
+        end_idx: -1
+        top_signame: rv_plic_tl
+        index: -1
+      }
+      {
+        name: rom_cfg
+        struct: rom_cfg
+        package: prim_rom_pkg
+        type: uni
+        act: rcv
+        width: 1
+        inst_name: rom_ctrl
+        default: ""
+        top_signame: ast_rom_cfg
+        index: -1
+      }
+      {
+        name: pwrmgr_data
+        struct: pwrmgr_data
+        package: rom_ctrl_pkg
+        type: uni
+        act: req
+        width: 1
+        inst_name: rom_ctrl
+        default: ""
+        end_idx: -1
+        top_type: broadcast
+        top_signame: rom_ctrl_pwrmgr_data
+        index: -1
+      }
+      {
+        name: keymgr_data
+        struct: keymgr_data
+        package: rom_ctrl_pkg
+        type: uni
+        act: req
+        width: 1
+        inst_name: rom_ctrl
+        index: -1
+      }
+      {
+        name: kmac_data
+        struct: app
+        package: vk_athos_pkg
+        type: req_rsp
+        act: req
+        width: 1
+        inst_name: rom_ctrl
+        index: -1
+      }
+      {
+        name: regs_tl
+        struct: tl
+        package: tlul_pkg
+        type: req_rsp
+        act: rsp
+        width: 1
+        inst_name: rom_ctrl
+        default: ""
+        end_idx: -1
+        top_signame: rom_ctrl_regs_tl
+        index: -1
+      }
+      {
+        name: rom_tl
+        struct: tl
+        package: tlul_pkg
+        type: req_rsp
+        act: rsp
+        width: 1
+        inst_name: rom_ctrl
+        default: ""
+        end_idx: -1
+        top_signame: rom_ctrl_rom_tl
+        index: -1
+      }
+      {
+        struct: tl
+        package: tlul_pkg
+        type: req_rsp
+        act: rsp
+        name: tl
+        inst_name: ram_main
+        width: 1
+        default: ""
+        end_idx: -1
+        top_signame: ram_main_tl
+        index: -1
+      }
+      {
+        struct: sram_scr
+        package: sram_ctrl_pkg
+        type: req_rsp
+        name: sram_scr
+        act: rsp
+        inst_name: ram_main
+        index: -1
+      }
+      {
+        struct: sram_scr_init
+        package: sram_ctrl_pkg
+        type: req_rsp
+        name: sram_scr_init
+        act: rsp
+        inst_name: ram_main
+        index: -1
+      }
+      {
+        struct: tl_instr_en
+        package: tlul_pkg
+        type: uni
+        name: en_ifetch
+        act: rcv
+        inst_name: ram_main
+        index: -1
+      }
+      {
+        struct: logic
+        package: ""
+        type: uni
+        name: intg_error
+        act: req
+        inst_name: ram_main
+        index: -1
+      }
+      {
+        struct: ram_1p_cfg
+        package: prim_ram_1p_pkg
+        type: uni
+        name: cfg
+        act: rcv
+        inst_name: ram_main
+        width: 1
+        default: ""
+        top_signame: ast_ram_1p_cfg
+        index: -1
+      }
+      {
+        struct: tl
+        package: tlul_pkg
+        type: req_rsp
+        act: rsp
+        name: tl
+        inst_name: ram_ret_aon
+        width: 1
+        default: ""
+        end_idx: -1
+        top_signame: ram_ret_aon_tl
+        index: -1
+      }
+      {
+        struct: sram_scr
+        package: sram_ctrl_pkg
+        type: req_rsp
+        name: sram_scr
+        act: rsp
+        inst_name: ram_ret_aon
+        index: -1
+      }
+      {
+        struct: sram_scr_init
+        package: sram_ctrl_pkg
+        type: req_rsp
+        name: sram_scr_init
+        act: rsp
+        inst_name: ram_ret_aon
+        index: -1
+      }
+      {
+        struct: tl_instr_en
+        package: tlul_pkg
+        type: uni
+        name: en_ifetch
+        act: rcv
+        inst_name: ram_ret_aon
+        index: -1
+      }
+      {
+        struct: logic
+        package: ""
+        type: uni
+        name: intg_error
+        act: req
+        inst_name: ram_ret_aon
+        index: -1
+      }
+      {
+        struct: ram_1p_cfg
+        package: prim_ram_1p_pkg
+        type: uni
+        name: cfg
+        act: rcv
+        inst_name: ram_ret_aon
+        width: 1
+        default: ""
+        top_signame: ast_ram_1p_cfg
+        index: -1
+      }
+      {
+        struct: flash
+        type: req_rsp
+        name: flash_ctrl
+        act: rsp
+        inst_name: eflash
+        width: 1
+        default: ""
+        package: flash_ctrl_pkg
+        top_signame: flash_ctrl_flash
+        index: -1
+      }
+      {
+        struct: tl
+        package: tlul_pkg
+        type: req_rsp
+        act: rsp
+        name: tl
+        inst_name: eflash
+        width: 1
+        default: ""
+        end_idx: -1
+        top_signame: eflash_tl
+        index: -1
+      }
+      {
+        struct: logic
+        package: ""
+        type: uni
+        act: rcv
+        name: flash_power_down_h
+        inst_name: eflash
+        width: 1
+        default: ""
+        external: true
+        top_signame: flash_power_down_h
+        index: -1
+      }
+      {
+        struct: logic
+        package: ""
+        type: uni
+        act: rcv
+        name: flash_power_ready_h
+        inst_name: eflash
+        width: 1
+        default: ""
+        external: true
+        top_signame: flash_power_ready_h
+        index: -1
+      }
+      {
+        struct: logic
+        package: ""
+        width: "4"
+        type: uni
+        act: rcv
+        name: flash_test_mode_a
+        inst_name: eflash
+        index: -1
+      }
+      {
+        struct: logic
+        package: ""
+        type: uni
+        act: rcv
+        name: flash_test_voltage_h
+        inst_name: eflash
+        index: -1
+      }
+      {
+        struct: ast_dif
+        package: ast_pkg
+        type: uni
+        act: req
+        name: flash_alert
+        inst_name: eflash
+        width: 1
+        default: ""
+        external: true
+        top_signame: flash_alert
+        index: -1
+      }
+      {
+        name: tl_corei
+        struct: tl
+        package: tlul_pkg
+        type: req_rsp
+        act: rsp
+        width: 1
+        inst_name: main
+        default: ""
+        top_signame: main_tl_corei
+        index: -1
+      }
+      {
+        name: tl_cored
+        struct: tl
+        package: tlul_pkg
+        type: req_rsp
+        act: rsp
+        width: 1
+        inst_name: main
+        default: ""
+        top_signame: main_tl_cored
+        index: -1
+      }
+      {
+        name: tl_dm_sba
+        struct: tl
+        package: tlul_pkg
+        type: req_rsp
+        act: rsp
+        width: 1
+        inst_name: main
+        default: ""
+        top_signame: main_tl_dm_sba
+        index: -1
+      }
+      {
+        name: tl_rom_ctrl__rom
+        struct: tl
+        package: tlul_pkg
+        type: req_rsp
+        act: req
+        width: 1
+        inst_name: main
+        default: ""
+        top_signame: rom_ctrl_rom_tl
+        index: -1
+      }
+      {
+        name: tl_rom_ctrl__regs
+        struct: tl
+        package: tlul_pkg
+        type: req_rsp
+        act: req
+        width: 1
+        inst_name: main
+        default: ""
+        top_signame: rom_ctrl_regs_tl
+        index: -1
+      }
+      {
+        name: tl_debug_mem
+        struct: tl
+        package: tlul_pkg
+        type: req_rsp
+        act: req
+        width: 1
+        inst_name: main
+        default: ""
+        top_signame: main_tl_debug_mem
+        index: -1
+      }
+      {
+        name: tl_ram_main
+        struct: tl
+        package: tlul_pkg
+        type: req_rsp
+        act: req
+        width: 1
+        inst_name: main
+        default: ""
+        top_signame: ram_main_tl
+        index: -1
+      }
+      {
+        name: tl_eflash
+        struct: tl
+        package: tlul_pkg
+        type: req_rsp
+        act: req
+        width: 1
+        inst_name: main
+        default: ""
+        top_signame: eflash_tl
+        index: -1
+      }
+      {
+        name: tl_peri
+        struct: tl
+        package: tlul_pkg
+        type: req_rsp
+        act: req
+        width: 1
+        inst_name: main
+        default: ""
+        end_idx: -1
+        top_signame: main_tl_peri
+        index: -1
+      }
+      {
+        name: tl_flash_ctrl__core
+        struct: tl
+        package: tlul_pkg
+        type: req_rsp
+        act: req
+        width: 1
+        inst_name: main
+        default: ""
+        top_signame: flash_ctrl_core_tl
+        index: -1
+      }
+      {
+        name: tl_flash_ctrl__prim
+        struct: tl
+        package: tlul_pkg
+        type: req_rsp
+        act: req
+        width: 1
+        inst_name: main
+        default: ""
+        top_signame: flash_ctrl_prim_tl
+        index: -1
+      }
+      {
+        name: tl_rv_plic
+        struct: tl
+        package: tlul_pkg
+        type: req_rsp
+        act: req
+        width: 1
+        inst_name: main
+        default: ""
+        top_signame: rv_plic_tl
+        index: -1
+      }
+      {
+        name: tl_main
+        struct: tl
+        package: tlul_pkg
+        type: req_rsp
+        act: rsp
+        width: 1
+        inst_name: peri
+        default: ""
+        top_signame: main_tl_peri
+        index: -1
+      }
+      {
+        name: tl_uart0
+        struct: tl
+        package: tlul_pkg
+        type: req_rsp
+        act: req
+        width: 1
+        inst_name: peri
+        default: ""
+        top_signame: uart0_tl
+        index: -1
+      }
+      {
+        name: tl_gpio
+        struct: tl
+        package: tlul_pkg
+        type: req_rsp
+        act: req
+        width: 1
+        inst_name: peri
+        default: ""
+        top_signame: gpio_tl
+        index: -1
+      }
+      {
+        name: tl_rv_timer
+        struct: tl
+        package: tlul_pkg
+        type: req_rsp
+        act: req
+        width: 1
+        inst_name: peri
+        default: ""
+        top_signame: rv_timer_tl
+        index: -1
+      }
+      {
+        name: tl_pwrmgr_aon
+        struct: tl
+        package: tlul_pkg
+        type: req_rsp
+        act: req
+        width: 1
+        inst_name: peri
+        default: ""
+        top_signame: pwrmgr_aon_tl
+        index: -1
+      }
+      {
+        name: tl_rstmgr_aon
+        struct: tl
+        package: tlul_pkg
+        type: req_rsp
+        act: req
+        width: 1
+        inst_name: peri
+        default: ""
+        top_signame: rstmgr_aon_tl
+        index: -1
+      }
+      {
+        name: tl_clkmgr_aon
+        struct: tl
+        package: tlul_pkg
+        type: req_rsp
+        act: req
+        width: 1
+        inst_name: peri
+        default: ""
+        top_signame: clkmgr_aon_tl
+        index: -1
+      }
+      {
+        name: tl_ram_ret_aon
+        struct: tl
+        package: tlul_pkg
+        type: req_rsp
+        act: req
+        width: 1
+        inst_name: peri
+        default: ""
+        top_signame: ram_ret_aon_tl
+        index: -1
+      }
+      {
+        name: tl_aon_timer_aon
+        struct: tl
+        package: tlul_pkg
+        type: req_rsp
+        act: req
+        width: 1
+        inst_name: peri
+        default: ""
+        top_signame: aon_timer_aon_tl
+        index: -1
+      }
+      {
+        name: tl_sysrst_ctrl_aon
+        struct: tl
+        package: tlul_pkg
+        type: req_rsp
+        act: req
+        width: 1
+        inst_name: peri
+        default: ""
+        top_signame: sysrst_ctrl_aon_tl
+        index: -1
+      }
+      {
+        name: tl_ast
+        struct: tl
+        package: tlul_pkg
+        type: req_rsp
+        act: req
+        width: 1
+        inst_name: peri
+        default: ""
+        external: true
+        top_signame: ast_tl
+        index: -1
+      }
+      {
+        struct: esc_tx
+        type: uni
+        name: esc_nmi_tx
+        act: rcv
+        package: prim_esc_pkg
+        inst_name: rv_core_ibex
+        index: -1
+      }
+      {
+        struct: esc_rx
+        type: uni
+        name: esc_nmi_rx
+        act: req
+        package: prim_esc_pkg
+        inst_name: rv_core_ibex
+        index: -1
+      }
+      {
+        struct: crash_dump
+        type: uni
+        name: crash_dump
+        act: req
+        package: ibex_pkg
+        inst_name: rv_core_ibex
+        width: 1
+        default: ""
+        end_idx: -1
+        top_type: broadcast
+        top_signame: rv_core_ibex_crash_dump
+        index: -1
+      }
+      {
+        struct: ram_1p_cfg_t
+        type: uni
+        name: ram_cfg
+        act: rcv
+        package: prim_ram_1p_pkg
+        inst_name: rv_core_ibex
+        width: 1
+        default: ""
+        top_signame: ast_ram_1p_cfg
+        index: -1
+      }
+      {
+        struct: jtag
+        type: req_rsp
+        name: jtag
+        act: rsp
+        package: jtag_pkg
+        inst_name: rv_dm
+        index: -1
+      }
+      {
+        struct: ram_1p_cfg
+        package: prim_ram_1p_pkg
+        type: uni
+        name: ram_1p_cfg
+        act: rcv
+        inst_name: ast
+        width: 1
+        default: ""
+        end_idx: -1
+        top_type: broadcast
+        top_signame: ast_ram_1p_cfg
+        index: -1
+        external: true
+      }
+      {
+        struct: rom_cfg
+        package: prim_rom_pkg
+        type: uni
+        name: rom_cfg
+        act: rcv
+        inst_name: ast
+        width: 1
+        default: ""
+        end_idx: -1
+        top_type: broadcast
+        top_signame: ast_rom_cfg
+        index: -1
+        external: true
+      }
+    ]
+    external:
+    [
+      {
+        package: prim_ram_1p_pkg
+        struct: ram_1p_cfg
+        signame: ram_1p_cfg_i
+        width: 1
+        type: uni
+        default: ""
+        direction: in
+        conn_type: true
+        index: -1
+        netname: ast_ram_1p_cfg
+      }
+      {
+        package: prim_rom_pkg
+        struct: rom_cfg
+        signame: rom_cfg_i
+        width: 1
+        type: uni
+        default: ""
+        direction: in
+        conn_type: true
+        index: -1
+        netname: ast_rom_cfg
+      }
+      {
+        package: ""
+        struct: logic
+        signame: clk_main_i
+        width: 1
+        type: uni
+        default: ""
+        direction: in
+        conn_type: false
+        index: -1
+        netname: clk_main
+      }
+      {
+        package: ""
+        struct: logic
+        signame: clk_io_i
+        width: 1
+        type: uni
+        default: ""
+        direction: in
+        conn_type: false
+        index: -1
+        netname: clk_io
+      }
+      {
+        package: ""
+        struct: logic
+        signame: clk_usb_i
+        width: 1
+        type: uni
+        default: ""
+        direction: in
+        conn_type: false
+        index: -1
+        netname: clk_usb
+      }
+      {
+        package: ""
+        struct: logic
+        signame: clk_aon_i
+        width: 1
+        type: uni
+        default: ""
+        direction: in
+        conn_type: false
+        index: -1
+        netname: clk_aon
+      }
+      {
+        package: ""
+        struct: logic
+        signame: clk_main_jitter_en_o
+        width: 1
+        type: uni
+        default: ""
+        direction: out
+        conn_type: false
+        index: -1
+        netname: clk_main_jitter_en
+      }
+      {
+        package: vk_athos_pkg
+        struct: lc_tx
+        signame: ast_clk_byp_req_o
+        width: 1
+        type: uni
+        default: ""
+        direction: out
+        conn_type: false
+        index: -1
+        netname: ast_clk_byp_req
+      }
+      {
+        package: vk_athos_pkg
+        struct: lc_tx
+        signame: ast_clk_byp_ack_i
+        width: 1
+        type: uni
+        default: ""
+        direction: in
+        conn_type: false
+        index: -1
+        netname: ast_clk_byp_ack
+      }
+      {
+        package: ast_pkg
+        struct: ast_dif
+        signame: flash_alert_o
+        width: 1
+        type: uni
+        default: ""
+        direction: out
+        conn_type: false
+        index: -1
+        netname: flash_alert
+      }
+      {
+        package: ""
+        struct: logic
+        signame: flash_power_down_h_i
+        width: 1
+        type: uni
+        default: ""
+        direction: in
+        conn_type: false
+        index: -1
+        netname: flash_power_down_h
+      }
+      {
+        package: ""
+        struct: logic
+        signame: flash_power_ready_h_i
+        width: 1
+        type: uni
+        default: ""
+        direction: in
+        conn_type: false
+        index: -1
+        netname: flash_power_ready_h
+      }
+      {
+        package: tlul_pkg
+        struct: tl_h2d
+        signame: ast_tl_req_o
+        width: 1
+        type: req_rsp
+        default: ""
+        direction: out
+        conn_type: false
+        index: -1
+        netname: ast_tl_h2d
+      }
+      {
+        package: tlul_pkg
+        struct: tl_d2h
+        signame: ast_tl_rsp_i
+        width: 1
+        type: req_rsp
+        default: ""
+        direction: in
+        conn_type: false
+        index: -1
+        netname: ast_tl_d2h
+      }
+      {
+        package: pwrmgr_pkg
+        struct: pwr_ast_req
+        signame: pwrmgr_ast_req_o
+        width: 1
+        type: req_rsp
+        default: ""
+        direction: out
+        conn_type: false
+        index: -1
+        netname: pwrmgr_ast_req
+      }
+      {
+        package: pwrmgr_pkg
+        struct: pwr_ast_rsp
+        signame: pwrmgr_ast_rsp_i
+        width: 1
+        type: req_rsp
+        default: ""
+        direction: in
+        conn_type: false
+        index: -1
+        netname: pwrmgr_ast_rsp
+      }
+      {
+        package: clkmgr_pkg
+        struct: clkmgr_ast_out
+        signame: clks_ast_o
+        width: 1
+        type: uni
+        default: ""
+        direction: out
+        conn_type: false
+        index: -1
+        netname: clks_ast
+      }
+      {
+        package: rstmgr_pkg
+        struct: rstmgr_ast_out
+        signame: rsts_ast_o
+        width: 1
+        type: uni
+        default: ""
+        direction: out
+        conn_type: false
+        index: -1
+        netname: rsts_ast
+      }
+    ]
+    definitions:
+    [
+      {
+        package: prim_ram_1p_pkg
+        struct: ram_1p_cfg
+        signame: ast_ram_1p_cfg
+        width: 1
+        type: uni
+        end_idx: -1
+        act: rcv
+        suffix: ""
+        default: prim_ram_1p_pkg::RAM_1P_CFG_DEFAULT
+      }
+      {
+        package: prim_rom_pkg
+        struct: rom_cfg
+        signame: ast_rom_cfg
+        width: 1
+        type: uni
+        end_idx: -1
+        act: rcv
+        suffix: ""
+        default: prim_rom_pkg::ROM_CFG_DEFAULT
+      }
+      {
+        package: flash_ctrl_pkg
+        struct: flash_req
+        signame: flash_ctrl_flash_req
+        width: 1
+        type: req_rsp
+        end_idx: -1
+        act: req
+        suffix: req
+        default: ""
+      }
+      {
+        package: flash_ctrl_pkg
+        struct: flash_rsp
+        signame: flash_ctrl_flash_rsp
+        width: 1
+        type: req_rsp
+        end_idx: -1
+        act: req
+        suffix: rsp
+        default: flash_ctrl_pkg::FLASH_RSP_DEFAULT
+      }
+      {
+        package: pwrmgr_pkg
+        struct: pwr_flash
+        signame: pwrmgr_aon_pwr_flash
+        width: 1
+        type: uni
+        end_idx: -1
+        act: rcv
+        suffix: ""
+        default: pwrmgr_pkg::PWR_FLASH_DEFAULT
+      }
+      {
+        package: pwrmgr_pkg
+        struct: pwr_rst_req
+        signame: pwrmgr_aon_pwr_rst_req
+        width: 1
+        type: req_rsp
+        end_idx: -1
+        act: req
+        suffix: req
+        default: ""
+      }
+      {
+        package: pwrmgr_pkg
+        struct: pwr_rst_rsp
+        signame: pwrmgr_aon_pwr_rst_rsp
+        width: 1
+        type: req_rsp
+        end_idx: -1
+        act: req
+        suffix: rsp
+        default: pwrmgr_pkg::PWR_RST_RSP_DEFAULT
+      }
+      {
+        package: pwrmgr_pkg
+        struct: pwr_clk_req
+        signame: pwrmgr_aon_pwr_clk_req
+        width: 1
+        type: req_rsp
+        end_idx: -1
+        act: req
+        suffix: req
+        default: ""
+      }
+      {
+        package: pwrmgr_pkg
+        struct: pwr_clk_rsp
+        signame: pwrmgr_aon_pwr_clk_rsp
+        width: 1
+        type: req_rsp
+        end_idx: -1
+        act: req
+        suffix: rsp
+        default: pwrmgr_pkg::PWR_CLK_RSP_DEFAULT
+      }
+      {
+        package: rom_ctrl_pkg
+        struct: pwrmgr_data
+        signame: rom_ctrl_pwrmgr_data
+        width: 1
+        type: uni
+        end_idx: -1
+        act: req
+        suffix: ""
+        default: rom_ctrl_pkg::PWRMGR_DATA_DEFAULT
+      }
+      {
+        package: ibex_pkg
+        struct: crash_dump
+        signame: rv_core_ibex_crash_dump
+        width: 1
+        type: uni
+        end_idx: -1
+        act: req
+        suffix: ""
+        default: ibex_pkg::CRASH_DUMP_DEFAULT
+      }
+      {
+        package: ""
+        struct: logic
+        signame: pwrmgr_aon_wakeups
+        width: 2
+        type: uni
+        end_idx: -1
+        act: rcv
+        suffix: ""
+        default: "'0"
+      }
+      {
+        package: ""
+        struct: logic
+        signame: pwrmgr_aon_rstreqs
+        width: 2
+        type: uni
+        end_idx: -1
+        act: rcv
+        suffix: ""
+        default: "'0"
+      }
+      {
+        package: tlul_pkg
+        struct: tl_h2d
+        signame: rom_ctrl_rom_tl_req
+        width: 1
+        type: req_rsp
+        end_idx: -1
+        act: rsp
+        suffix: req
+        default: tlul_pkg::TL_H2D_DEFAULT
+      }
+      {
+        package: tlul_pkg
+        struct: tl_d2h
+        signame: rom_ctrl_rom_tl_rsp
+        width: 1
+        type: req_rsp
+        end_idx: -1
+        act: rsp
+        suffix: rsp
+        default: ""
+      }
+      {
+        package: tlul_pkg
+        struct: tl_h2d
+        signame: rom_ctrl_regs_tl_req
+        width: 1
+        type: req_rsp
+        end_idx: -1
+        act: rsp
+        suffix: req
+        default: tlul_pkg::TL_H2D_DEFAULT
+      }
+      {
+        package: tlul_pkg
+        struct: tl_d2h
+        signame: rom_ctrl_regs_tl_rsp
+        width: 1
+        type: req_rsp
+        end_idx: -1
+        act: rsp
+        suffix: rsp
+        default: ""
+      }
+      {
+        package: tlul_pkg
+        struct: tl_h2d
+        signame: ram_main_tl_req
+        width: 1
+        type: req_rsp
+        end_idx: -1
+        act: rsp
+        suffix: req
+        default: tlul_pkg::TL_H2D_DEFAULT
+      }
+      {
+        package: tlul_pkg
+        struct: tl_d2h
+        signame: ram_main_tl_rsp
+        width: 1
+        type: req_rsp
+        end_idx: -1
+        act: rsp
+        suffix: rsp
+        default: ""
+      }
+      {
+        package: tlul_pkg
+        struct: tl_h2d
+        signame: eflash_tl_req
+        width: 1
+        type: req_rsp
+        end_idx: -1
+        act: rsp
+        suffix: req
+        default: tlul_pkg::TL_H2D_DEFAULT
+      }
+      {
+        package: tlul_pkg
+        struct: tl_d2h
+        signame: eflash_tl_rsp
+        width: 1
+        type: req_rsp
+        end_idx: -1
+        act: rsp
+        suffix: rsp
+        default: ""
+      }
+      {
+        package: tlul_pkg
+        struct: tl_h2d
+        signame: main_tl_peri_req
+        width: 1
+        type: req_rsp
+        end_idx: -1
+        act: req
+        suffix: req
+        default: ""
+      }
+      {
+        package: tlul_pkg
+        struct: tl_d2h
+        signame: main_tl_peri_rsp
+        width: 1
+        type: req_rsp
+        end_idx: -1
+        act: req
+        suffix: rsp
+        default: tlul_pkg::TL_D2H_DEFAULT
+      }
+      {
+        package: tlul_pkg
+        struct: tl_h2d
+        signame: flash_ctrl_core_tl_req
+        width: 1
+        type: req_rsp
+        end_idx: -1
+        act: rsp
+        suffix: req
+        default: tlul_pkg::TL_H2D_DEFAULT
+      }
+      {
+        package: tlul_pkg
+        struct: tl_d2h
+        signame: flash_ctrl_core_tl_rsp
+        width: 1
+        type: req_rsp
+        end_idx: -1
+        act: rsp
+        suffix: rsp
+        default: ""
+      }
+      {
+        package: tlul_pkg
+        struct: tl_h2d
+        signame: flash_ctrl_prim_tl_req
+        width: 1
+        type: req_rsp
+        end_idx: -1
+        act: rsp
+        suffix: req
+        default: tlul_pkg::TL_H2D_DEFAULT
+      }
+      {
+        package: tlul_pkg
+        struct: tl_d2h
+        signame: flash_ctrl_prim_tl_rsp
+        width: 1
+        type: req_rsp
+        end_idx: -1
+        act: rsp
+        suffix: rsp
+        default: ""
+      }
+      {
+        package: tlul_pkg
+        struct: tl_h2d
+        signame: rv_plic_tl_req
+        width: 1
+        type: req_rsp
+        end_idx: -1
+        act: rsp
+        suffix: req
+        default: tlul_pkg::TL_H2D_DEFAULT
+      }
+      {
+        package: tlul_pkg
+        struct: tl_d2h
+        signame: rv_plic_tl_rsp
+        width: 1
+        type: req_rsp
+        end_idx: -1
+        act: rsp
+        suffix: rsp
+        default: ""
+      }
+      {
+        package: tlul_pkg
+        struct: tl_h2d
+        signame: uart0_tl_req
+        width: 1
+        type: req_rsp
+        end_idx: -1
+        act: rsp
+        suffix: req
+        default: tlul_pkg::TL_H2D_DEFAULT
+      }
+      {
+        package: tlul_pkg
+        struct: tl_d2h
+        signame: uart0_tl_rsp
+        width: 1
+        type: req_rsp
+        end_idx: -1
+        act: rsp
+        suffix: rsp
+        default: ""
+      }
+      {
+        package: tlul_pkg
+        struct: tl_h2d
+        signame: gpio_tl_req
+        width: 1
+        type: req_rsp
+        end_idx: -1
+        act: rsp
+        suffix: req
+        default: tlul_pkg::TL_H2D_DEFAULT
+      }
+      {
+        package: tlul_pkg
+        struct: tl_d2h
+        signame: gpio_tl_rsp
+        width: 1
+        type: req_rsp
+        end_idx: -1
+        act: rsp
+        suffix: rsp
+        default: ""
+      }
+      {
+        package: tlul_pkg
+        struct: tl_h2d
+        signame: rv_timer_tl_req
+        width: 1
+        type: req_rsp
+        end_idx: -1
+        act: rsp
+        suffix: req
+        default: tlul_pkg::TL_H2D_DEFAULT
+      }
+      {
+        package: tlul_pkg
+        struct: tl_d2h
+        signame: rv_timer_tl_rsp
+        width: 1
+        type: req_rsp
+        end_idx: -1
+        act: rsp
+        suffix: rsp
+        default: ""
+      }
+      {
+        package: tlul_pkg
+        struct: tl_h2d
+        signame: pwrmgr_aon_tl_req
+        width: 1
+        type: req_rsp
+        end_idx: -1
+        act: rsp
+        suffix: req
+        default: tlul_pkg::TL_H2D_DEFAULT
+      }
+      {
+        package: tlul_pkg
+        struct: tl_d2h
+        signame: pwrmgr_aon_tl_rsp
+        width: 1
+        type: req_rsp
+        end_idx: -1
+        act: rsp
+        suffix: rsp
+        default: ""
+      }
+      {
+        package: tlul_pkg
+        struct: tl_h2d
+        signame: rstmgr_aon_tl_req
+        width: 1
+        type: req_rsp
+        end_idx: -1
+        act: rsp
+        suffix: req
+        default: tlul_pkg::TL_H2D_DEFAULT
+      }
+      {
+        package: tlul_pkg
+        struct: tl_d2h
+        signame: rstmgr_aon_tl_rsp
+        width: 1
+        type: req_rsp
+        end_idx: -1
+        act: rsp
+        suffix: rsp
+        default: ""
+      }
+      {
+        package: tlul_pkg
+        struct: tl_h2d
+        signame: clkmgr_aon_tl_req
+        width: 1
+        type: req_rsp
+        end_idx: -1
+        act: rsp
+        suffix: req
+        default: tlul_pkg::TL_H2D_DEFAULT
+      }
+      {
+        package: tlul_pkg
+        struct: tl_d2h
+        signame: clkmgr_aon_tl_rsp
+        width: 1
+        type: req_rsp
+        end_idx: -1
+        act: rsp
+        suffix: rsp
+        default: ""
+      }
+      {
+        package: tlul_pkg
+        struct: tl_h2d
+        signame: ram_ret_aon_tl_req
+        width: 1
+        type: req_rsp
+        end_idx: -1
+        act: rsp
+        suffix: req
+        default: tlul_pkg::TL_H2D_DEFAULT
+      }
+      {
+        package: tlul_pkg
+        struct: tl_d2h
+        signame: ram_ret_aon_tl_rsp
+        width: 1
+        type: req_rsp
+        end_idx: -1
+        act: rsp
+        suffix: rsp
+        default: ""
+      }
+      {
+        package: tlul_pkg
+        struct: tl_h2d
+        signame: aon_timer_aon_tl_req
+        width: 1
+        type: req_rsp
+        end_idx: -1
+        act: rsp
+        suffix: req
+        default: tlul_pkg::TL_H2D_DEFAULT
+      }
+      {
+        package: tlul_pkg
+        struct: tl_d2h
+        signame: aon_timer_aon_tl_rsp
+        width: 1
+        type: req_rsp
+        end_idx: -1
+        act: rsp
+        suffix: rsp
+        default: ""
+      }
+      {
+        package: tlul_pkg
+        struct: tl_h2d
+        signame: sysrst_ctrl_aon_tl_req
+        width: 1
+        type: req_rsp
+        end_idx: -1
+        act: rsp
+        suffix: req
+        default: tlul_pkg::TL_H2D_DEFAULT
+      }
+      {
+        package: tlul_pkg
+        struct: tl_d2h
+        signame: sysrst_ctrl_aon_tl_rsp
+        width: 1
+        type: req_rsp
+        end_idx: -1
+        act: rsp
+        suffix: rsp
+        default: ""
+      }
+      {
+        package: rstmgr_pkg
+        struct: rstmgr_out
+        signame: rstmgr_aon_resets
+        width: 1
+        type: uni
+        end_idx: -1
+        default: ""
+      }
+      {
+        package: rstmgr_pkg
+        struct: rstmgr_cpu
+        signame: rstmgr_aon_cpu
+        width: 1
+        type: uni
+        end_idx: -1
+        default: ""
+      }
+      {
+        package: pwrmgr_pkg
+        struct: pwr_cpu
+        signame: pwrmgr_aon_pwr_cpu
+        width: 1
+        type: uni
+        end_idx: -1
+        default: ""
+      }
+      {
+        package: clkmgr_pkg
+        struct: clkmgr_out
+        signame: clkmgr_aon_clocks
+        width: 1
+        type: uni
+        end_idx: -1
+        default: ""
+      }
+      {
+        package: vk_athos_pkg
+        struct: lc_tx
+        signame: pwrmgr_aon_fetch_en
+        width: 1
+        type: uni
+        end_idx: -1
+        default: ""
+      }
+      {
+        package: tlul_pkg
+        struct: tl_h2d
+        signame: main_tl_corei_req
+        width: 1
+        type: req_rsp
+        end_idx: -1
+        default: ""
+      }
+      {
+        package: tlul_pkg
+        struct: tl_d2h
+        signame: main_tl_corei_rsp
+        width: 1
+        type: req_rsp
+        end_idx: -1
+        default: ""
+      }
+      {
+        package: tlul_pkg
+        struct: tl_h2d
+        signame: main_tl_cored_req
+        width: 1
+        type: req_rsp
+        end_idx: -1
+        default: ""
+      }
+      {
+        package: tlul_pkg
+        struct: tl_d2h
+        signame: main_tl_cored_rsp
+        width: 1
+        type: req_rsp
+        end_idx: -1
+        default: ""
+      }
+      {
+        package: tlul_pkg
+        struct: tl_h2d
+        signame: main_tl_dm_sba_req
+        width: 1
+        type: req_rsp
+        end_idx: -1
+        default: ""
+      }
+      {
+        package: tlul_pkg
+        struct: tl_d2h
+        signame: main_tl_dm_sba_rsp
+        width: 1
+        type: req_rsp
+        end_idx: -1
+        default: ""
+      }
+      {
+        package: tlul_pkg
+        struct: tl_h2d
+        signame: main_tl_debug_mem_req
+        width: 1
+        type: req_rsp
+        end_idx: -1
+        default: ""
+      }
+      {
+        package: tlul_pkg
+        struct: tl_d2h
+        signame: main_tl_debug_mem_rsp
+        width: 1
+        type: req_rsp
+        end_idx: -1
+        default: ""
+      }
+    ]
+  }
+}

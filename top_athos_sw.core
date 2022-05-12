@@ -1,0 +1,18 @@
+CAPI=2:
+
+name: "bci:sw:top_athos_sw:1.0"
+description: "top_athos_sw"
+
+filesets:
+  files_top_athos_sw:
+    files:
+      - sw/autogen/top_athos.h :        {is_include_file: true}
+      - sw/autogen/top_athos_memory.h : {is_include_file: true}
+      - sw/autogen/top_athos.c
+      - sw/autogen/top_athos_memory.ld : {file_type: swLdSource}
+    file_type: swCSource
+
+targets:
+  default: 
+    filesets:
+      - files_top_athos_sw
