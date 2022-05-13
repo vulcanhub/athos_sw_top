@@ -2,7 +2,7 @@
 // Licensed under the Apache License, Version 2.0, see LICENSE for details.
 // SPDX-License-Identifier: Apache-2.0
 
-#include "top_athos_sw/sw/autogen/top_athos.h"
+#include "top/sw/autogen/top_athos.h"
 
 /**
  * PLIC Interrupt Source to Peripheral Map
